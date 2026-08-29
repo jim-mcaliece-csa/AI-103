@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Flashcards and an exam-style practice assessment for AI-103 Module 1.">
+  <title>AI-103 Module 1 Study Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to study content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-block">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+        <div>
+          <p class="eyebrow">Microsoft Exam AI-103 · Module 01</p>
+          <h1>Plan and prepare to develop AI solutions on Azure</h1>
+        </div>
+      </div>
+
+      <div class="header-links">
+        <a href="README.md">Study notes</a>
+        <a href="https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/" target="_blank" rel="noreferrer">Microsoft Learn <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <nav class="tabs" aria-label="Study modes" role="tablist">
+      <button
+        class="tab-button is-active"
+        id="flashcards-tab"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="flashcards-panel"
+        data-tab="flashcards"
+      >
+        <span class="tab-number">01</span>
+        Flashcards
+      </button>
+      <button
+        class="tab-button"
+        id="exam-tab"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="exam-panel"
+        data-tab="exam"
+      >
+        <span class="tab-number">02</span>
+        Practice exam
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section
+      class="tab-panel"
+      id="flashcards-panel"
+      role="tabpanel"
+      aria-labelledby="flashcards-tab"
+      data-panel="flashcards"
+    >
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow accent">Active recall deck</p>
+          <h2>Learn every concept from the module</h2>
+          <p class="section-description">
+            Filter the complete deck, reveal each answer, and classify cards as mastered or needing review.
+            Progress is saved in this browser.
+          </p>
+        </div>
+        <div class="stat-row" aria-label="Flashcard statistics">
+          <div class="stat">
+            <span class="stat-value" id="card-total">0</span>
+            <span class="stat-label">in view</span>
+          </div>
+          <div class="stat success">
+            <span class="stat-value" id="card-mastered">0</span>
+            <span class="stat-label">mastered</span>
+          </div>
+          <div class="stat warning">
+            <span class="stat-value" id="card-review">0</span>
+            <span class="stat-label">review</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-bar" aria-label="Flashcard filters">
+        <label>
+          <span>Unit</span>
+          <select id="card-unit-filter">
+            <option value="all">All units</option>
+          </select>
+        </label>
+        <label>
+          <span>Category</span>
+          <select id="card-category-filter">
+            <option value="all">All categories</option>
+          </select>
+        </label>
+        <label class="search-field">
+          <span>Search</span>
+          <input id="card-search" type="search" placeholder="Search terms and answers">
+        </label>
+        <button class="button secondary" id="shuffle-cards" type="button">Shuffle deck</button>
+        <button class="button ghost danger-text" id="reset-cards" type="button">Reset progress</button>
+      </div>
+
+      <div class="deck-progress">
+        <div class="progress-meta">
+          <span id="card-position">Card 0 of 0</span>
+          <span id="card-status-label">Not rated</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <span id="card-progress-fill"></span>
+        </div>
+      </div>
+
+      <div class="flashcard-stage" id="flashcard-stage">
+        <button
+          class="flashcard"
+          id="flashcard"
+          type="button"
+          aria-label="Reveal flashcard answer"
+          aria-pressed="false"
+        >
+          <span class="flashcard-inner">
+            <span class="flashcard-face flashcard-front">
+              <span class="card-meta">
+                <span class="unit-chip" id="card-front-unit">Unit</span>
+                <span id="card-front-category">Category</span>
+              </span>
+              <span class="card-kicker">Question</span>
+              <span class="card-copy" id="card-front-text"></span>
+              <span class="flip-hint">Select the card or press Space to reveal</span>
+            </span>
+            <span class="flashcard-face flashcard-back">
+              <span class="card-meta">
+                <span class="unit-chip" id="card-back-unit">Unit</span>
+                <span id="card-back-category">Category</span>
+              </span>
+              <span class="card-kicker">Answer</span>
+              <span class="card-copy answer-copy" id="card-back-text"></span>
+              <span class="flip-hint">Select the card or press Space to show the question</span>
+            </span>
+          </span>
+        </button>
+
+        <div class="empty-state hidden" id="card-empty-state">
+          <h3>No cards match these filters</h3>
+          <p>Change the unit, category, or search text to restore the deck.</p>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="icon-button" id="previous-card" type="button" aria-label="Previous flashcard">←</button>
+        <button class="button review-button" id="review-card" type="button">Review again</button>
+        <button class="button secondary" id="flip-card" type="button">Reveal answer</button>
+        <button class="button success-button" id="master-card" type="button">Know it</button>
+        <button class="icon-button" id="next-card" type="button" aria-label="Next flashcard">→</button>
+      </div>
+
+      <p class="keyboard-help">
+        Keyboard: <kbd>Space</kbd> reveal · <kbd>←</kbd>/<kbd>→</kbd> navigate ·
+        <kbd>R</kbd> review · <kbd>K</kbd> know it
+      </p>
+      <p class="live-region" id="card-announcement" aria-live="polite"></p>
+    </section>
+
+    <section
+      class="tab-panel hidden"
+      id="exam-panel"
+      role="tabpanel"
+      aria-labelledby="exam-tab"
+      data-panel="exam"
+    >
+      <div class="exam-intro" id="exam-intro">
+        <div class="intro-copy">
+          <p class="eyebrow accent">Exam-style assessment</p>
+          <h2>Module 1 practice exam</h2>
+          <p class="lead">
+            A comprehensive, original assessment covering all nine units. It mirrors important Microsoft
+            certification interactions while remaining focused only on this module.
+          </p>
+
+          <div class="exam-facts">
+            <div>
+              <strong id="intro-question-count">50</strong>
+              <span>questions</span>
+            </div>
+            <div>
+              <strong>120</strong>
+              <span>minutes</span>
+            </div>
+            <div>
+              <strong id="intro-section-count">3</strong>
+              <span>sections</span>
+            </div>
+            <div>
+              <strong>700</strong>
+              <span>official scaled pass score*</span>
+            </div>
+          </div>
+
+          <div class="notice">
+            <strong>Important:</strong> This is a Module 1 study simulation with original questions—not an
+            official Microsoft exam or leaked exam content. AI-103 covers substantially more material.
+            Microsoft does not publish a fixed question count or guarantee specific item types. This static
+            page does not simulate a live Azure lab.
+          </div>
+          <p class="source-note">
+            *Microsoft uses scaled scoring, so 700 does not mean 70%. Format references:
+            <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-apps-and-agents-developer-associate/" target="_blank" rel="noreferrer">AI-103 exam page</a>,
+            <a href="https://learn.microsoft.com/en-us/credentials/support/exam-duration-exam-experience" target="_blank" rel="noreferrer">exam experience</a>, and
+            <a href="https://aka.ms/examdemo" target="_blank" rel="noreferrer">exam sandbox</a>.
+          </p>
+        </div>
+
+        <aside class="instructions-card">
+          <h3>Simulation rules</h3>
+          <ul>
+            <li>The 120-minute timer continues until submission.</li>
+            <li>Questions include single choice, choose-N, yes/no groups, matching, and build-list ordering.</li>
+            <li>You can navigate and mark items for review inside the current section.</li>
+            <li>A section review appears before you continue.</li>
+            <li>After leaving a section, you cannot return to it.</li>
+            <li>Multi-part items award credit per correctly answered component.</li>
+            <li>There is no penalty for guessing.</li>
+          </ul>
+          <label class="agreement">
+            <input id="exam-agreement" type="checkbox">
+            <span>I understand this is a module-only practice simulation.</span>
+          </label>
+          <button class="button primary wide" id="start-exam" type="button" disabled>Start assessment</button>
+          <button class="button secondary wide hidden" id="continue-exam" type="button">Continue saved attempt</button>
+          <button class="text-button hidden" id="discard-exam" type="button">Discard saved attempt</button>
+        </aside>
+      </div>
+
+      <div class="exam-shell hidden" id="exam-shell">
+        <header class="exam-toolbar">
+          <div>
+            <p class="eyebrow">AI-103 · Module 1 simulation</p>
+            <strong id="exam-section-title">Section</strong>
+          </div>
+          <div class="exam-toolbar-stats">
+            <span><b id="exam-answered-count">0</b> answered</span>
+            <span><b id="exam-flagged-count">0</b> marked</span>
+            <span class="timer" id="exam-timer" aria-label="Time remaining">02:00:00</span>
+          </div>
+        </header>
+
+        <div class="exam-layout">
+          <aside class="exam-sidebar">
+            <div class="sidebar-heading">
+              <span>Questions</span>
+              <span id="exam-question-position">1 of 50</span>
+            </div>
+            <div class="question-legend" aria-label="Question status legend">
+              <span><i class="legend-dot answered"></i>Answered</span>
+              <span><i class="legend-dot marked"></i>Review</span>
+            </div>
+            <div class="question-grid" id="question-grid" aria-label="Question navigation"></div>
+            <div class="sidebar-links">
+              <a href="https://learn.microsoft.com/" target="_blank" rel="noreferrer">Open Microsoft Learn ↗</a>
+              <button class="text-button" id="show-exam-help" type="button">Exam help</button>
+            </div>
+          </aside>
+
+          <section class="question-workspace" aria-live="polite">
+            <div class="case-study-panel hidden" id="case-study-panel">
+              <div class="case-study-heading">
+                <div>
+                  <span class="question-type-label">Case study</span>
+                  <h3 id="case-study-title"></h3>
+                </div>
+                <button class="text-button" id="toggle-case-study" type="button" aria-expanded="true">Hide scenario</button>
+              </div>
+              <div class="case-study-content" id="case-study-content"></div>
+            </div>
+
+            <article class="question-card" id="question-card">
+              <div class="question-header">
+                <div>
+                  <span class="question-type-label" id="question-type">Single choice</span>
+                  <span class="question-domain" id="question-domain"></span>
+                </div>
+                <button class="mark-button" id="mark-question" type="button" aria-pressed="false">
+                  <span aria-hidden="true">⚑</span> Mark for review
+                </button>
+              </div>
+
+              <p class="question-instruction" id="question-instruction"></p>
+              <h2 class="question-prompt" id="question-prompt"></h2>
+              <div class="answer-area" id="answer-area"></div>
+
+              <details class="question-notes">
+                <summary>Personal note for this question</summary>
+                <label class="sr-only" for="question-note">Personal note</label>
+                <textarea id="question-note" rows="3" placeholder="Record what you want to revisit."></textarea>
+              </details>
+            </article>
+
+            <section class="section-review hidden" id="section-review">
+              <p class="eyebrow accent">Section review</p>
+              <h2 id="review-section-title">Review this section</h2>
+              <p id="review-section-summary"></p>
+              <div class="review-filter-row">
+                <button class="button secondary" id="review-unanswered" type="button">Review unanswered</button>
+                <button class="button secondary" id="review-marked" type="button">Review marked</button>
+              </div>
+              <div class="review-list" id="section-review-list"></div>
+              <div class="notice warning-notice">
+                Once you finish this section, its questions are locked and cannot be revisited.
+              </div>
+              <button class="button primary" id="finish-section" type="button">Finish section and continue</button>
+            </section>
+
+            <footer class="question-actions" id="question-actions">
+              <button class="button secondary" id="previous-question" type="button">Previous</button>
+              <button class="text-button danger-text" id="clear-answer" type="button">Clear answer</button>
+              <button class="button primary" id="next-question" type="button">Next</button>
+            </footer>
+          </section>
+        </div>
+      </div>
+
+      <section class="results hidden" id="exam-results">
+        <div class="result-hero">
+          <p class="eyebrow accent">Assessment complete</p>
+          <h2 id="result-heading">Your results</h2>
+          <p id="result-summary"></p>
+          <div class="score-ring" id="score-ring" aria-label="Raw score percentage">
+            <span id="score-percent">0%</span>
+            <small>raw score</small>
+          </div>
+          <p class="score-disclaimer">
+            Microsoft reports a scaled score from 1–1,000 and requires 700 to pass. A raw percentage cannot
+            be converted directly to that scaled score; this page reports study performance only.
+          </p>
+        </div>
+
+        <div class="result-grid">
+          <section class="result-card">
+            <h3>Performance by unit</h3>
+            <div id="unit-results"></div>
+          </section>
+          <section class="result-card">
+            <h3>Attempt summary</h3>
+            <dl class="summary-list">
+              <div><dt>Points earned</dt><dd id="points-earned">0 / 0</dd></div>
+              <div><dt>Questions fully correct</dt><dd id="questions-correct">0 / 0</dd></div>
+              <div><dt>Questions marked</dt><dd id="result-marked">0</dd></div>
+              <div><dt>Time used</dt><dd id="time-used">00:00</dd></div>
+            </dl>
+          </section>
+        </div>
+
+        <section class="answer-review">
+          <div class="answer-review-heading">
+            <div>
+              <h3>Answer review</h3>
+              <p>Unlike the live certification score report, this study simulation shows explanations.</p>
+            </div>
+            <select id="result-filter" aria-label="Filter answer review">
+              <option value="all">All questions</option>
+              <option value="incorrect">Incorrect or partial</option>
+              <option value="correct">Fully correct</option>
+              <option value="marked">Marked for review</option>
+            </select>
+          </div>
+          <div id="answer-review-list"></div>
+        </section>
+
+        <div class="result-actions">
+          <button class="button primary" id="retake-exam" type="button">Start a new attempt</button>
+          <button class="button secondary" id="return-flashcards" type="button">Review flashcards</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="help-dialog">
+    <form method="dialog">
+      <div class="dialog-heading">
+        <h2>Assessment help</h2>
+        <button class="icon-button" value="close" aria-label="Close help">×</button>
+      </div>
+      <ul>
+        <li>Use the numbered grid to revisit a question in the current section.</li>
+        <li>A filled number is answered; a gold corner indicates it is marked for review.</li>
+        <li>Choose-N items require the stated number of selections.</li>
+        <li>Matching and yes/no items can award partial credit by row.</li>
+        <li>Use the section-review screen before locking a section.</li>
+        <li>The timer continues if you open Microsoft Learn in another tab.</li>
+      </ul>
+      <p>
+        Microsoft may use formats such as active screen, build list, drag-and-drop, hot area, case studies,
+        multiple choice, and labs. This static simulation implements the formats that work accessibly without
+        a live Azure environment.
+      </p>
+      <button class="button primary" value="close">Close</button>
+    </form>
+  </dialog>
+
+  <noscript>
+    <div class="noscript">This study page requires JavaScript for flashcards, scoring, and navigation.</div>
+  </noscript>
+
+  <script src="flashcards.js"></script>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
