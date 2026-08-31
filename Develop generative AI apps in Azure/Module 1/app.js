@@ -28,6 +28,70 @@
     return Array.from(new Set(values));
   }
 
+  function shuffled(values) {
+    var copy = values.slice();
+    for (var index = copy.length - 1; index > 0; index -= 1) {
+      var swapIndex = Math.floor(Math.random() * (index + 1));
+      var temporary = copy[index];
+      copy[index] = copy[swapIndex];
+      copy[swapIndex] = temporary;
+    }
+    return copy;
+  }
+
+  function positions(length) {
+    var list = [];
+    for (var index = 0; index < length; index += 1) {
+      list.push(index);
+    }
+    return list;
+  }
+
+  // The question bank authors every correct answer first, so an attempt stores its own
+  // option and row permutations. They are saved with the attempt to stay stable across
+  // re-renders and page reloads, and are rebuilt as identity orders for attempts that
+  // were saved before shuffling existed.
+  function buildPresentation(randomize) {
+    var presentation = {};
+    QUESTIONS.forEach(function (question) {
+      var optionCount = Array.isArray(question.options) ? question.options.length : 0;
+      var rowCount = Array.isArray(question.items) ? question.items.length : 0;
+      presentation[question.id] = {
+        options: randomize ? shuffled(positions(optionCount)) : positions(optionCount),
+        rows: randomize ? shuffled(positions(rowCount)) : positions(rowCount)
+      };
+    });
+    return presentation;
+  }
+
+  function presentationFor(question) {
+    var optionCount = Array.isArray(question.options) ? question.options.length : 0;
+    var rowCount = Array.isArray(question.items) ? question.items.length : 0;
+    var saved = state.exam && state.exam.presentation ? state.exam.presentation[question.id] : null;
+    var optionOrder = saved && Array.isArray(saved.options) && saved.options.length === optionCount
+      ? saved.options
+      : positions(optionCount);
+    var rowOrder = saved && Array.isArray(saved.rows) && saved.rows.length === rowCount
+      ? saved.rows
+      : positions(rowCount);
+    return { optionOrder: optionOrder, rowOrder: rowOrder };
+  }
+
+  // Returns the question as the candidate sees it. Answers are stored by option text and
+  // by displayed row index, so `correct` is permuted alongside the rows it scores.
+  function viewFor(question) {
+    var layout = presentationFor(question);
+    var view = {
+      options: layout.optionOrder.map(function (index) { return question.options[index]; }),
+      items: layout.rowOrder.map(function (index) { return question.items[index]; }),
+      correct: question.correct
+    };
+    if (question.type === "yesno" || question.type === "matching") {
+      view.correct = layout.rowOrder.map(function (index) { return question.correct[index]; });
+    }
+    return view;
+  }
+
   function defaultState() {
     return {
       activeTab: "flashcards",
@@ -78,6 +142,9 @@
         fresh.exam.notes = fresh.exam.notes || {};
         fresh.exam.flagged = Array.isArray(fresh.exam.flagged) ? fresh.exam.flagged : [];
         fresh.exam.completedSections = Array.isArray(fresh.exam.completedSections) ? fresh.exam.completedSections : [];
+        fresh.exam.presentation = fresh.exam.presentation && typeof fresh.exam.presentation === "object"
+          ? fresh.exam.presentation
+          : buildPresentation(false);
       }
     } catch (error) {
       console.warn("Saved study progress could not be loaded.", error);
@@ -327,7 +394,8 @@
       notes: {},
       flagged: [],
       completedSections: [],
-      caseCollapsed: false
+      caseCollapsed: false,
+      presentation: buildPresentation(true)
     };
   }
 
@@ -592,7 +660,7 @@
       ? (Array.isArray(current) ? current : [])
       : (typeof current === "string" ? [current] : []);
 
-    question.options.forEach(function (option, index) {
+    viewFor(question).options.forEach(function (option, index) {
       var label = createElement("label", "answer-option");
       var input = document.createElement("input");
       input.type = question.type === "single" ? "radio" : "checkbox";
@@ -641,7 +709,7 @@
     table.appendChild(thead);
 
     var tbody = document.createElement("tbody");
-    question.items.forEach(function (item, index) {
+    viewFor(question).items.forEach(function (item, index) {
       var row = document.createElement("tr");
       row.appendChild(createElement("td", "", item));
       ["Yes", "No"].forEach(function (value) {
@@ -669,7 +737,8 @@
 
   function renderMatchingQuestion(area, question) {
     var answers = Array.isArray(answerFor(question)) ? answerFor(question).slice() : [];
-    question.items.forEach(function (item, index) {
+    var view = viewFor(question);
+    view.items.forEach(function (item, index) {
       var row = createElement("div", "matching-row");
       row.appendChild(createElement("p", "", item));
       var select = document.createElement("select");
@@ -677,7 +746,7 @@
       var placeholder = createElement("option", "", "Select an answer");
       placeholder.value = "";
       select.appendChild(placeholder);
-      question.options.forEach(function (option) {
+      view.options.forEach(function (option) {
         var optionElement = createElement("option", "", option);
         optionElement.value = option;
         select.appendChild(optionElement);
@@ -698,7 +767,7 @@
     var saved = answerFor(question);
     var orderedItems = Array.isArray(saved) && saved.length === question.items.length
       ? saved.slice()
-      : question.items.slice();
+      : viewFor(question).items;
     var list = createElement("ol", "order-list");
 
     orderedItems.forEach(function (item, index) {
@@ -956,20 +1025,21 @@
 
   function scoreQuestion(question) {
     var answer = answerFor(question);
+    var expectedAnswer = viewFor(question).correct;
     var earned = 0;
     var maximum = 1;
 
     if (question.type === "single") {
-      earned = answer === question.correct ? 1 : 0;
+      earned = answer === expectedAnswer ? 1 : 0;
     } else if (question.type === "multiple") {
-      maximum = question.correct.length;
+      maximum = expectedAnswer.length;
       if (Array.isArray(answer)) {
-        earned = answer.filter(function (value) { return question.correct.indexOf(value) !== -1; }).length;
+        earned = answer.filter(function (value) { return expectedAnswer.indexOf(value) !== -1; }).length;
       }
     } else if (question.type === "yesno" || question.type === "matching" || question.type === "order") {
-      maximum = question.correct.length;
+      maximum = expectedAnswer.length;
       if (Array.isArray(answer)) {
-        earned = question.correct.reduce(function (total, expected, index) {
+        earned = expectedAnswer.reduce(function (total, expected, index) {
           return total + (answer[index] === expected ? 1 : 0);
         }, 0);
       }
@@ -1068,7 +1138,7 @@
       return answer.join("; ");
     }
     if (question.type === "yesno" || question.type === "matching") {
-      return question.items.map(function (item, index) {
+      return viewFor(question).items.map(function (item, index) {
         return item + " → " + (answer[index] || "No answer");
       }).join(" | ");
     }
@@ -1079,10 +1149,11 @@
   }
 
   function correctAnswerFor(question) {
+    var expectedAnswer = viewFor(question).correct;
     if (question.type === "single") {
-      return question.correct;
+      return expectedAnswer;
     }
-    return formatQuestionAnswer(question, question.correct);
+    return formatQuestionAnswer(question, expectedAnswer);
   }
 
   function renderAnswerReview() {
