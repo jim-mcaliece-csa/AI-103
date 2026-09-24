@@ -62,7 +62,7 @@ Discipline folder: [Develop generative AI apps in Azure](<Develop generative AI 
 | - [ ] | [Module 1](<Develop generative AI apps in Azure/Module 1/README.md>) — Plan and prepare to develop AI solutions on Azure |  |  |  | [Flashcards and practice exam](<Develop generative AI apps in Azure/Module 1/index.html>) |
 | - [ ] | [Module 2](<Develop generative AI apps in Azure/Module 2/README.md>) — Select, deploy, and evaluate Microsoft Foundry models |  |  |  | [Flashcards and practice exam](<Develop generative AI apps in Azure/Module 2/index.html>) |
 | - [ ] | [Module 3](<Develop generative AI apps in Azure/Module 3/README.md>) — Develop a generative AI chat app with Microsoft Foundry |  |  |  | [Flashcards and practice exam](<Develop generative AI apps in Azure/Module 3/index.html>) |
-| - [ ] | [Module 4](<Develop generative AI apps in Azure/Module 4>) — *add title* |  |  |  |  |
+| - [ ] | [Module 4](<Develop generative AI apps in Azure/Module 4/README.md>) — Develop generative AI apps that use tools |  |  |  | [Flashcards and practice exam](<Develop generative AI apps in Azure/Module 4/index.html>) |
 | - [ ] | [Module 5](<Develop generative AI apps in Azure/Module 5>) — *add title* |  |  |  |  |
 | - [ ] | [Module 6](<Develop generative AI apps in Azure/Module 6>) — *add title* |  |  |  |  |
 | - [ ] | [Module 7](<Develop generative AI apps in Azure/Module 7>) — *add title* |  |  |  |  |
