@@ -1,6 +1,6 @@
 # Module 4 Answer Key
 
-**Develop generative AI apps in Azure — Module 4: Develop generative AI apps that use tools**
+**Develop generative AI apps in Azure — Module 4: Optimize generative AI model performance with Microsoft Foundry**
 
 Answer key for the practice assessment in [index.html](index.html). Generated from the question
 bank in [questions.js](questions.js), which is the authoritative source — regenerate this file if
@@ -9,7 +9,7 @@ the bank changes.
 | | |
 | --- | --- |
 | Questions | 50 |
-| Total points | 173 |
+| Total points | 156 |
 | Sections | 3 |
 | Time limit | 120 minutes |
 
@@ -23,854 +23,819 @@ per correct selection, row, or correctly placed item.
 ## Quick reference
 
 | # | ID | Unit | Type | Pts | Answer |
-| --- | --- | --- | --- | --- | --- |
-| 1 | G01 | Unit 1 | Single choice | 1 | To let the model access information or perform tasks beyond its training-data boundary. |
-| 2 | G02 | Unit 1 | Multiple choice | 4 | Retrieve current information that was not in the model's training data.; Ground answers in authoritative external content.; Trigger controlled actions in business systems.; Coordinate multistep workflows that combine reasoning and operations. |
-| 3 | G03 | Unit 1 | Yes / No | 3 | Yes, No, Yes |
-| 4 | G04 | Unit 2 | Single choice | 1 | The OpenAI Responses API |
-| 5 | G05 | Unit 2 | Matching | 4 | 1) Generate and execute Python in a sandboxed runtime.; 2) Retrieve current information from the public web.; 3) Semantically retrieve content from indexed uploaded documents.; 4) Request that application code run developer-defined business logic. |
-| 6 | G06 | Unit 2 | Multiple choice | 4 | The model deployment name.; User input.; Instructions that guide behavior and tool use.; A tools list containing one or more tool definitions. |
-| 7 | G07 | Unit 2 | Yes / No | 3 | Yes, Yes, No |
-| 8 | G08 | Unit 2 | Single choice | 1 | That the selected model deployment, API, region, and service configuration support the tool. |
-| 9 | G09 | Unit 2 | Build list | 5 | 1) Choose a compatible deployed model and endpoint. → 2) Define the allowed tools and their tool-specific settings. → 3) Submit input through responses.create(). → 4) Let the model select and use an appropriate declared tool. → 5) Inspect the response and validate the answer and tool evidence. |
-| 10 | G10 | Unit 3 | Single choice | 1 | A sandboxed Python runtime in which the model can generate and execute code. |
-| 11 | G11 | Unit 3 | Multiple choice | 4 | Calculate summary statistics from a CSV file.; Solve a mathematical problem with executable code.; Convert structured data between JSON and CSV.; Test an algorithm or simulation. |
-| 12 | G12 | Unit 3 | Matching | 4 | 1) Generated code runs in an isolated environment rather than on the application host.; 2) Packages such as pandas, NumPy, and matplotlib may be available for analysis.; 3) The model can inspect errors or results and revise its code.; 4) The runtime can process supported uploaded data and produce downloadable artifacts. |
-| 13 | G13 | Unit 3 | Yes / No | 4 | Yes, Yes, No, Yes |
-| 14 | G14 | Unit 3 | Build list | 5 | 1) The application includes code_interpreter in the tools list. → 2) The model determines that code execution is useful. → 3) The model generates Python code for the task. → 4) The generated code runs in the sandbox. → 5) The model incorporates execution output into its response. |
-| 15 | G15 | Unit 3 | Multiple choice | 4 | Describe the input format and expected output clearly.; Review generated code and results for correctness.; Monitor token and execution costs.; Design for timeouts, unavailable libraries, and data-size limits. |
-| 16 | G16 | Unit 4 | Single choice | 1 | When the answer depends on current, publicly available information. |
-| 17 | G17 | Unit 4 | Multiple choice | 4 | Summarize a breaking technology announcement.; Compare recently published product prices.; Check whether public regulations or guidance changed.; Verify a public claim against reputable current sources. |
-| 18 | G18 | Unit 4 | Matching | 4 | 1) The model determines whether fresh web information is needed.; 2) The model formulates one or more searches based on user intent.; 3) Relevant public pages are selected and summarized.; 4) Search findings are incorporated into a source-grounded answer. |
-| 19 | G19 | Unit 4 | Yes / No | 4 | Yes, Yes, No, Yes |
-| 20 | G20 | Unit 4 | Build list | 5 | 1) Analyze the question and define the required current time scope. → 2) Construct the Responses API request with web_search declared. → 3) Let the service search and retrieve relevant public-web evidence. → 4) Render the answer with its citation annotations as inspectable sources. → 5) Independently verify material high-stakes claims before acting. |
-| 21 | G21 | Unit 4 | Multiple choice | 4 | Specify words such as current, latest, or a date range when recency matters.; Request reputable or official sources when accuracy matters.; Treat retrieved page content as untrusted, keep secrets out of tool-visible context, and do not let page text override trusted instructions.; Track retrieval latency, token usage, and cost. |
-| 22 | G22 | Unit 5 | Single choice | 1 | file_search |
-| 23 | G23 | Unit 5 | Build list | 4 | 1) Create a vector store for the document collection. → 2) Upload files and wait for indexing to complete. → 3) Submit a response request that declares file_search and the vector store ID. → 4) The service injects relevant retrieved passages for answer generation. |
-| 24 | G24 | Unit 5 | Matching | 4 | 1) Creates a named searchable document collection.; 2) Uploads content and waits for processing and indexing to finish.; 3) Scopes a file_search tool to one or more indexed collections.; 4) Returns retrieval details for development, debugging, or traceability. |
-| 25 | G25 | Unit 5 | Multiple choice | 4 | It can ground answers in private or domain-specific uploaded documents.; It performs semantic retrieval rather than relying only on exact keywords.; It searches indexed collections represented by vector stores.; It can expose matched retrieval results for debugging and traceability. |
-| 26 | G26 | Unit 5 | Yes / No | 4 | Yes, Yes, No, Yes |
-| 27 | G27 | Unit 5 | Single choice | 1 | include=["file_search_call.results"] |
-| 28 | G28 | Unit 5 | Multiple choice | 3 | Separate unrelated domains into appropriately scoped vector stores.; Authorize the signed-in caller in application code and pass only vector_store_ids that caller is permitted to search.; Remove or replace stale documents and re-index changed content. |
-| 29 | G29 | Unit 6 | Single choice | 1 | The model emits a structured function_call, and the application decides whether and how to execute it. |
-| 30 | G30 | Unit 6 | Matching | 5 | 1) Identifies which approved operation the model is requesting.; 2) Helps the model understand when the operation is appropriate.; 3) Carries model-generated input values that application code must validate.; 4) Correlates a returned result with the specific function request.; 5) Carries the application's execution result back into the conversation. |
-| 31 | G31 | Unit 6 | Build list | 6 | 1) Declare the functions and send the initial Responses API request. → 2) Inspect response.output and collect every function_call item. → 3) For every collected call, validate the function name and arguments, authorize the caller, and execute only approved code. → 4) Build one function_call_output item for each original call_id. → 5) Submit all function_call_output items together in a follow-up request that sets previous_response_id. → 6) Repeat the loop until a response contains no function_call items, then use the final answer. |
-| 32 | G32 | Unit 6 | Multiple choice | 4 | Allowlist recognized function names.; Validate argument types, ranges, and business rules.; Check the caller's authorization for the requested action.; Require confirmation or approval for high-impact operations. |
-| 33 | G33 | Unit 6 | Yes / No | 4 | Yes, No, Yes, No |
-| 34 | G34 | Unit 6 | Single choice | 1 | To associate the application result with the exact function request that produced it. |
-| 35 | G35 | Unit 6 | Multiple choice | 4 | Keep functions focused and single-purpose.; Return clear, bounded error results the model can reason about.; Log calls, latency, outcomes, and failures for audit and debugging.; Apply timeouts and idempotency protections where appropriate. |
-| 36 | G36 | Unit 6 | Matching | 4 | 1) code_interpreter; 2) web_search; 3) file_search; 4) function |
-| 37 | G37 | Unit 7 | Build list | 6 | 1) Deploy gpt-5.2 in a Microsoft Foundry project. → 2) Configure the Azure OpenAI endpoint and exact model deployment name. → 3) Create the travel-brochures vector store and upload the brochure PDFs. → 4) Call responses.create() with web_search, file_search, and response-ID state. → 5) Run the app and test a current destination question followed by a brochure-specific question. → 6) Delete the resource group when the resources are no longer needed. |
-| 38 | G38 | Unit 7 | Single choice | 1 | The OpenAI SDK with the Azure OpenAI endpoint and Microsoft Entra ID. |
-| 39 | G39 | Unit 7 | Multiple choice | 4 | The vector store is named travel-brochures.; The app uploads PDF files from the brochures folder and waits for ingestion.; The Responses request declares both file_search and web_search.; The app saves response.id and supplies it as previous_response_id on the next turn. |
-| 40 | G40 | Unit 7 | Yes / No | 4 | Yes, Yes, No, Yes |
-| 41 | G41 | Unit 8 | Matching | 3 | 1) Use file_search.; 2) Run the approved function in application code and return function_call_output.; 3) Use code_interpreter in its sandboxed runtime. |
-| 42 | G42 | Unit 9 | Build list | 4 | 1) Define the allowed tool or tools in the request. → 2) Let the model decide when an allowed tool is appropriate. → 3) Return tool output when the selected tool requires client-side execution. → 4) Validate the answer and tool behavior for correctness and safety. |
-| 43 | CT01 | Units 4 and 5 | Multiple choice | 2 | web_search; file_search |
-| 44 | CT02 | Units 2, 4, and 5 | Matching | 4 | 1) Use web_search.; 2) Use file_search over the authorized vector store.; 3) Expose or render the relevant web citation or annotation.; 4) Inspect file-search results or citations from the indexed document. |
-| 45 | CT03 | Units 2, 5, and 7 | Yes / No | 4 | Yes, Yes, No, Yes |
-| 46 | CT04 | Units 5 and 7 | Build list | 6 | 1) Create a vector store scoped to the travel brochures. → 2) Upload approved brochures and wait for indexing. → 3) Submit a current destination question with web_search and file_search available. → 4) Save the first response ID. → 5) Ask a follow-up brochure-specific question using the saved previous response ID. → 6) Verify that each claim is supported by the appropriate source. |
-| 47 | FO01 | Units 3 and 6 | Matching | 4 | 1) Use code_interpreter for sandboxed analysis.; 2) Expose a focused read-only function backed by the inventory API.; 3) Use a separately authorized function with confirmation and idempotency controls.; 4) Log function name, caller, arguments after redaction, latency, outcome, and call ID. |
-| 48 | FO02 | Unit 6 | Multiple choice | 4 | Confirm that create_purchase_order is on the function allowlist.; Validate item identifiers, quantities, limits, and argument types.; Verify that the signed-in manager is authorized for the requested purchase.; Require the configured confirmation or approval for the transaction. |
-| 49 | FO03 | Units 3 and 6 | Single choice | 1 | Use an authorized application function to retrieve the data, then provide only the necessary data to the analysis flow. |
-| 50 | FO04 | Unit 6 | Build list | 6 | 1) Submit the prompt with the focused function definition available. → 2) The model emits a create_purchase_order function_call. → 3) Validate the function name, arguments, caller authorization, and approval state. → 4) Execute the idempotent business operation and record an audit event. → 5) Send the bounded result as function_call_output with the matching call_id. → 6) The model produces a final user-facing response. |
+| --- | --- | --- | --- | ---: | --- |
+| 1 | G01 | Unit 1 | Single choice | 1 | Define measurable requirements and evaluate the base model on representative inputs |
+| 2 | G02 | Unit 1 | Build list | 5 | 1) Define quality, consistency, cost, and latency requirements. → 2) Measure the unmodified model on representative test cases. → 3) Iterate on system instructions, examples, and supported generation parameters. → 4) Add retrieval or fine-tuning only for requirements the prompt cannot satisfy reliably. → 5) Compare the optimized variant with the baseline and check for regressions. |
+| 3 | G03 | Unit 2 | Matching | 4 | 1) Defines the model's role, boundaries, style, and response constraints; 2) Contains the current request or source input from the user; 3) Preserves earlier model output as context for a later turn; 4) Demonstrates the pattern or format the model should imitate |
+| 4 | G04 | Unit 2 | Single choice | 1 | Act as a travel advisor, decline booking requests, and return three concise bullet points. |
+| 5 | G05 | Unit 2 | Multiple choice | 4 | A clearly stated assistant role and desired outcome; Explicit topics or actions that are out of scope; A required output structure when the application must parse the result; A policy for ambiguous requests or missing information |
+| 6 | G06 | Unit 2 | Yes / No | 3 | Yes, No, Yes |
+| 7 | G07 | Unit 2 | Matching | 5 | 1) Persona pattern; 2) Format template; 3) Few-shot learning; 4) Clear delimiters or tagged sections; 5) Task decomposition |
+| 8 | G08 | Unit 2 | Single choice | 1 | State the goal, constraints, and required result clearly instead of demanding a visible chain of thought. |
+| 9 | G09 | Unit 2 | Single choice | 1 | One-shot learning |
+| 10 | G10 | Unit 2 | Yes / No | 3 | Yes, Yes, No |
+| 11 | G11 | Unit 2 | Multiple choice | 4 | Lower temperature generally favors focused, repeatable output.; Higher temperature can increase variety for creative tasks.; Top_p limits candidate tokens by cumulative probability mass.; A practical starting guideline is to tune temperature or top_p rather than changing both together. |
+| 12 | G12 | Unit 2 | Single choice | 1 | A low value such as 0.2 |
+| 13 | G13 | Unit 3 | Build list | 3 | 1) Retrieve information relevant to the user's question. → 2) Add the selected evidence to the model input. → 3) Generate an answer from the augmented request. |
+| 14 | G14 | Unit 3 | Single choice | 1 | Instructions can guide behavior but cannot supply facts the request never provides. |
+| 15 | G15 | Unit 3 | Matching | 4 | 1) Matches exact terms in the query and indexed text; 2) Uses semantic models to rank by meaning rather than only exact terms; 3) Finds nearby embedding vectors representing similar content; 4) Combines lexical and meaning-based techniques in one retrieval strategy |
+| 16 | G16 | Unit 3 | Multiple choice | 4 | Answer from private organizational policies; Reflect inventory that changes every hour; Ground high-stakes factual claims in approved evidence; Use information published after the base model's training cutoff |
+| 17 | G17 | Unit 3 | Yes / No | 3 | Yes, Yes, No |
+| 18 | G18 | Unit 3 | Build list | 4 | 1) Add approved source content from storage or uploaded files. → 2) Create and store embeddings in an Azure AI Search index. → 3) Convert the user query for retrieval and search the index. → 4) Insert the retrieved passages into the request and generate an answer. |
+| 19 | G19 | Unit 3 | Single choice | 1 | Hybrid search |
+| 20 | G20 | Unit 3 | Matching | 4 | 1) Holds the authoritative documents or records; 2) Transforms content and queries into semantic vectors; 3) Stores searchable fields and returns relevant passages; 4) Uses the retrieved context to compose the final response |
+| 21 | G21 | Unit 3 | Yes / No | 3 | Yes, No, Yes |
+| 22 | G22 | Unit 4 | Single choice | 1 | Evaluate supervised fine-tuning with representative prompt-and-response examples. |
+| 23 | G23 | Unit 4 | Matching | 5 | 1) Learns from labeled prompt-and-response examples; 2) Uses a grader and iterative rewards to improve responses; 3) Aligns behavior from preferred and non-preferred response pairs; 4) Approximates weight updates through a lower-rank representation; 5) Transfers useful behavior from a larger model to a smaller model |
+| 24 | G24 | Unit 4 | Multiple choice | 5 | Enforce a brand style more consistently; Produce a defined output schema more reliably; Shorten a large repeated instruction-and-example prompt; Improve tool selection from representative tool-use examples; Distill behavior into a smaller model for lower cost or latency |
+| 25 | G25 | Unit 4 | Yes / No | 3 | Yes, No, Yes |
+| 26 | G26 | Unit 4 | Single choice | 1 | To determine whether the customized model improved target behavior or caused regressions |
+| 27 | G27 | Unit 4 | Multiple choice | 5 | Store one valid JSON object per line in JSONL format.; Include system, user, and assistant messages in each conversation example.; Use high-quality examples representative of expected production scenarios.; Make assistant responses demonstrate the exact desired tone and format.; Use a consistent system message and also use it at inference time. |
+| 28 | G28 | Unit 4 | Build list | 5 | 1) Establish a base-model evaluation baseline. → 2) Prepare and validate representative training examples. → 3) Submit and monitor the fine-tuning job. → 4) Deploy the resulting model and compare it with the base deployment. → 5) Re-evaluate after deployment and inspect regressions. |
+| 29 | G29 | Unit 4 | Matching | 5 | 1) The model memorizes or specializes too closely and generalizes poorly.; 2) The customization does not learn the target pattern strongly enough.; 3) Unrepresentative examples cause systematically skewed behavior.; 4) Performance on broad language tasks declines outside the trained domain.; 5) Data or base-model changes require new validation and possibly retraining. |
+| 30 | G30 | Unit 4 | Yes / No | 3 | Yes, Yes, No |
+| 31 | G31 | Unit 4 | Single choice | 1 | Model drift caused by overly narrow specialization |
+| 32 | G32 | Unit 5 | Matching | 4 | 1) Prompt engineering; 2) RAG; 3) Fine-tuning; 4) Prompt engineering, RAG, and fine-tuning together |
+| 33 | G33 | Unit 5 | Single choice | 1 | Prompt engineering |
+| 34 | G34 | Unit 5 | Multiple choice | 4 | Use RAG to retrieve current private facts.; Use fine-tuning to improve persistent brand-style consistency.; Use a system message for campaign-specific instructions and guardrails.; Evaluate the combined system against the baseline and representative cases. |
+| 35 | G35 | Unit 5 | Yes / No | 3 | Yes, Yes, No |
+| 36 | G36 | Unit 5 | Build list | 5 | 1) Start with prompt design, examples, and supported parameter tuning. → 2) Evaluate each change against requirements and the baseline. → 3) Add RAG if the model requires specific, private, or current knowledge. → 4) Add fine-tuning if persistent style or format remains inconsistent. → 5) Combine only the layers required by measured application needs. |
+| 37 | G37 | Unit 5 | Single choice | 1 | RAG for current policies and fine-tuning for the persistent disclosure format |
+| 38 | G38 | Unit 6 | Single choice | 1 | It provides a base-model behavior baseline for comparison. |
+| 39 | G39 | Unit 6 | Build list | 6 | 1) Create a Foundry project and deploy the gpt-5 base model. → 2) Submit the supervised fine-tuning job and monitor it while other work continues. → 3) Test and refine the base model's travel-assistant instructions. → 4) Review the JSONL conversations that demonstrate the desired style. → 5) Test the automatically deployed fine-tuned model with the same instructions and prompts. → 6) Delete the exercise resource group when it is no longer needed. |
+| 40 | G40 | Unit 6 | Matching | 6 | 1) gpt-5; 2) travel-finetune-hotel.jsonl; 3) Supervised; 4) Standard; 5) ft-travel; 6) Automatically deploy as a Developer deployment |
+| 41 | G41 | Unit 7 | Matching | 5 | 1) Defines request-time role, behavior, and output constraints; 2) Supplies external domain-specific or current evidence; 3) Controls the degree of sampling variability; 4) Improves learned consistency of style, behavior, or format; 5) Separates changing facts, persistent behavior, and session instructions into appropriate layers |
+| 42 | G42 | Unit 8 | Multiple choice | 4 | Start with prompt engineering and a measured baseline.; Use RAG when answers require private, current, or source-grounded knowledge.; Consider fine-tuning when prompt engineering cannot make behavior sufficiently consistent.; Combine techniques only when distinct measured requirements justify the added layers. |
+| 43 | CT01 | Unit 2 | Single choice | 1 | Create and evaluate a clear system message with an explicit format template. |
+| 44 | CT02 | Unit 3 | Single choice | 1 | Retrieve relevant current catalog records at request time and include them as grounded context. |
+| 45 | CT03 | Unit 4 | Multiple choice | 3 | The brand voice is still inconsistent across representative requests.; The required recommendation schema is still violated frequently.; The repeated few-shot prompt materially increases token cost and latency. |
+| 46 | CT04 | Units 2, 3, 4, and 6 | Build list | 5 | 1) Record the gpt-5 base deployment's results on the representative evaluation set. → 2) Test a system message and few-shot examples against the baseline. → 3) Build RAG over the current catalog and retest the same cases. → 4) Create and submit supervised training data that demonstrates the approved voice and format. → 5) Compare base, prompted-and-grounded, and fine-tuned variants on quality, consistency, latency, and cost. |
+| 47 | FK01 | Unit 3 | Single choice | 1 | Chunking, index fields, query construction, and the hybrid retrieval configuration |
+| 48 | FK02 | Unit 5 | Multiple choice | 4 | Improve and evaluate retrieval before attributing factual failures to the generator.; Replace the longest repeated instructions with a concise tested system message.; Consider fine-tuning only if format inconsistency persists and the savings justify training and hosting.; Compare variants on groundedness, schema compliance, input tokens, latency, and cost. |
+| 49 | FK03 | Units 2, 4, and 5 | Yes / No | 3 | Yes, No, Yes |
+| 50 | FK04 | Units 3, 4, and 5 | Matching | 4 | 1) Refresh the approved source and its search index.; 2) Improve chunking, query construction, and retrieval evaluation.; 3) Refine the prompt first, then evaluate fine-tuning if the behavior remains inconsistent.; 4) Shorten the prompt and evaluate whether fine-tuning can learn the repeated pattern economically. |
 
 ## General Questions
 
-*42 questions · 142 points*
+*42 questions · 134 points*
 
 ### 1. G01 — Unit 1
 
-*Single choice · Explain why generative AI tools matter · 1 point*
+*Single choice · Plan model optimization · 1 point*
 
-What is the primary reason to add tools to a generative AI application?
+A base language model produces useful answers but does not consistently meet an application's accuracy, tone, and format requirements. What should the team do before choosing an optimization technique?
 
-**Answer:** To let the model access information or perform tasks beyond its training-data boundary.
+**Answer:** Define measurable requirements and evaluate the base model on representative inputs
 
-**Rationale.** Tools bridge model reasoning and external capabilities. They can provide current or private information and enable controlled actions, but they do not retrain the model or remove the need for security and validation.
+**Rationale.** Optimization should begin with explicit success criteria and a baseline measured on representative data. Without that evidence, the team cannot tell whether prompt changes, retrieval, or fine-tuning improve the application or merely change it.
 
 ### 2. G02 — Unit 1
 
-*Multiple choice · Explain why generative AI tools matter · 4 points*
+*Build list · Plan model optimization · 5 points*
 
-Which four capabilities can tools add to a generative AI application? Select four answers.
+Arrange these activities into an evidence-driven optimization sequence.
 
-**Answer** (select 4):
+**Answer** (correct sequence):
 
-- Retrieve current information that was not in the model's training data.
-- Ground answers in authoritative external content.
-- Trigger controlled actions in business systems.
-- Coordinate multistep workflows that combine reasoning and operations.
+1. Define quality, consistency, cost, and latency requirements.
+2. Measure the unmodified model on representative test cases.
+3. Iterate on system instructions, examples, and supported generation parameters.
+4. Add retrieval or fine-tuning only for requirements the prompt cannot satisfy reliably.
+5. Compare the optimized variant with the baseline and check for regressions.
 
-**Rationale.** The module identifies real-time access, factual grounding, actions, and intelligent workflows as major benefits. Evaluation, permissions, and access controls remain necessary.
+**Rationale.** The team first defines the target, establishes a baseline, and tries the lowest-cost optimization. It then adds RAG for missing context or fine-tuning for persistent behavior problems and validates the result against the same baseline.
 
-### 3. G03 — Unit 1
+### 3. G03 — Unit 2
 
-*Yes / No · Distinguish prompt tools from related services · 3 points*
+*Matching · Engineer effective prompts · 4 points*
 
-For each statement about this module's use of tools, select Yes if the statement is true. Otherwise, select No.
+Match each chat-prompt component to its primary purpose.
 
 **Answer:**
 
-| Statement | Answer |
+| Item | Match |
 | --- | --- |
-| The module focuses on tools specified by client applications in model requests. | **Yes** |
-| A Responses API tool definition is the same thing as a prebuilt Azure service marketed as a Foundry Tool. | **No** |
-| Learning client-managed tool use is a useful step toward agentic solutions with persisted tool configurations. | **Yes** |
+| System message | Defines the model's role, boundaries, style, and response constraints |
+| User message | Contains the current request or source input from the user |
+| Assistant message in retained history | Preserves earlier model output as context for a later turn |
+| Example input/output pair | Demonstrates the pattern or format the model should imitate |
 
-**Rationale.** The module covers request-level tools managed by client code and explicitly distinguishes them from Foundry Tools, which are Azure AI APIs. The pattern prepares developers for agents, where instructions and tools can be persisted.
+**Rationale.** These components have separate roles: the system message establishes behavior, the user message supplies the request, assistant history preserves conversational context, and examples demonstrate the desired pattern.
 
 ### 4. G04 — Unit 2
 
-*Single choice · Configure tools in a model request · 1 point*
+*Single choice · Engineer effective prompts · 1 point*
 
-Which API does the module use to submit prompts that include tool definitions?
+Which instruction belongs most naturally in a system message?
 
-**Answer:** The OpenAI Responses API
+**Answer:** Act as a travel advisor, decline booking requests, and return three concise bullet points.
 
-**Rationale.** The module's client-managed examples specify one or more tools in the `tools` collection of `responses.create()`. Chat Completions, Assistants, and persisted Foundry agents use different request or orchestration patterns.
+**Rationale.** A system message defines role, boundaries, tone, and output format. A user question belongs in user input, retrieval is an application operation, and weight updates require training rather than prompting.
 
 ### 5. G05 — Unit 2
 
-*Matching · Choose a tool for a requirement · 4 points*
+*Multiple choice · Engineer effective prompts · 4 points*
 
-Match each Responses API tool to its primary capability.
+Which four elements make a system message more operationally useful? Select four answers.
 
-**Answer:**
+**Answer** (select 4):
 
-| Item | Correct match |
-| --- | --- |
-| code_interpreter | Generate and execute Python in a sandboxed runtime. |
-| web_search | Retrieve current information from the public web. |
-| file_search | Semantically retrieve content from indexed uploaded documents. |
-| function | Request that application code run developer-defined business logic. |
+- A clearly stated assistant role and desired outcome
+- Explicit topics or actions that are out of scope
+- A required output structure when the application must parse the result
+- A policy for ambiguous requests or missing information
 
-**Rationale.** Each tool extends the model differently: computation, public-web retrieval, private document retrieval, or application-controlled integration.
+**Rationale.** A strong system message states the role, boundaries, output expectations, and what to do when uncertain. Instructions influence behavior but do not guarantee compliance, and indiscriminately inserting all documents wastes context and does not ensure relevance.
 
 ### 6. G06 — Unit 2
 
-*Multiple choice · Configure tools in a model request · 4 points*
+*Yes / No · Engineer effective prompts · 3 points*
 
-Which four elements commonly belong in a Responses API request that lets a model use tools? Select four answers.
+For each statement about system messages, select Yes if the statement is true. Otherwise, select No.
 
-**Answer** (select 4):
+**Answer:**
 
-- The model deployment name.
-- User input.
-- Instructions that guide behavior and tool use.
-- A tools list containing one or more tool definitions.
+| Statement | Answer |
+| --- | --- |
+| A system message can guide tone and specify an output format. | **Yes** |
+| A detailed system message permanently changes the model's trained weights. | **No** |
+| A system message should still be tested with representative and adversarial inputs. | **Yes** |
 
-**Rationale.** A tool-enabled request identifies a deployed model, supplies input and optional guidance, and declares available tools. An initial turn has no prior response to reference, and function output is returned only after the model requests a function call.
+**Rationale.** System messages guide request-time behavior; they do not retrain the model. Because compliance is probabilistic, the application must evaluate the instructions and layer other safeguards where needed.
 
 ### 7. G07 — Unit 2
 
-*Yes / No · Control tool selection · 3 points*
+*Matching · Apply prompt patterns · 5 points*
 
-For each statement about tool selection, select Yes if the statement is true. Otherwise, select No.
+Match each prompt design need to the most appropriate pattern.
 
 **Answer:**
 
-| Statement | Answer |
+| Item | Match |
 | --- | --- |
-| By default, the model normally decides whether a tool is needed and which available tool to use. | **Yes** |
-| tool_choice can constrain tool use, while instructions can guide the model about when a tool is appropriate. | **Yes** |
-| Declaring a tool automatically proves that the deployed model and region support it. | **No** |
+| Write from the perspective of an experienced technical marketer. | Persona pattern |
+| Return hotel data with the same named fields every time. | Format template |
+| Classify a message by imitating several labeled examples. | Few-shot learning |
+| Separate instructions, reference text, and examples unambiguously. | Clear delimiters or tagged sections |
+| Reduce errors in a complex request by dividing it into explicit stages. | Task decomposition |
 
-**Rationale.** The default behavior is model-selected tool use. The tool_choice setting can constrain selection when supported, while instructions can guide the decision. Tool availability still depends on the model, deployment, region, API, and service support.
+**Rationale.** Personas establish perspective, templates define structure, few-shot examples demonstrate a mapping, delimiters distinguish prompt sections, and decomposition turns a complicated task into smaller verifiable steps.
 
 ### 8. G08 — Unit 2
 
-*Single choice · Plan compatible tool use · 1 point*
+*Single choice · Apply prompt patterns · 1 point*
 
-What should a developer verify before designing an application around a particular tool?
+A team is using a reasoning model from a family that performs internal step-by-step reasoning. Which prompt change best follows the module's guidance?
 
-**Answer:** That the selected model deployment, API, region, and service configuration support the tool.
+**Answer:** State the goal, constraints, and required result clearly instead of demanding a visible chain of thought.
 
-**Rationale.** Tool support is capability- and deployment-specific and can vary by model, region, API version, and service state. Compatibility must be checked rather than assumed.
+**Rationale.** Explicit chain-of-thought prompting is presented for non-reasoning models. A reasoning model still needs a clear task and constraints, but the application should not depend on disclosure of hidden reasoning.
 
 ### 9. G09 — Unit 2
 
-*Build list · Implement tool-enabled responses · 5 points*
+*Single choice · Apply prompt patterns · 1 point*
 
-Arrange the general built-in-tool workflow in a sensible implementation order.
+A classification prompt contains one labeled example before the unlabeled request. Which prompting approach is this?
 
-**Answer** (correct sequence):
+**Answer:** One-shot learning
 
-1. Choose a compatible deployed model and endpoint.
-2. Define the allowed tools and their tool-specific settings.
-3. Submit input through responses.create().
-4. Let the model select and use an appropriate declared tool.
-5. Inspect the response and validate the answer and tool evidence.
+**Rationale.** One example makes the prompt one-shot. Zero-shot has no examples, few-shot uses multiple examples, and neither RAG nor fine-tuning is implied by an in-prompt demonstration.
 
-**Rationale.** Compatibility and tool configuration come before the request. The model can then select a declared tool, after which the application should inspect and validate the result.
+### 10. G10 — Unit 2
 
-### 10. G10 — Unit 3
+*Yes / No · Structure prompts · 3 points*
 
-*Single choice · Use code interpreter · 1 point*
-
-What capability does the code_interpreter tool add to a model?
-
-**Answer:** A sandboxed Python runtime in which the model can generate and execute code.
-
-**Rationale.** Code interpreter runs model-generated Python in an isolated environment. It is not the application host, does not provide unrestricted external-network access, and does not replace authorization.
-
-### 11. G11 — Unit 3
-
-*Multiple choice · Use code interpreter · 4 points*
-
-Which four tasks are suitable code_interpreter use cases? Select four answers.
-
-**Answer** (select 4):
-
-- Calculate summary statistics from a CSV file.
-- Solve a mathematical problem with executable code.
-- Convert structured data between JSON and CSV.
-- Test an algorithm or simulation.
-
-**Rationale.** The sandbox is useful for analysis, calculations, conversions, simulations, and prototyping. External network access is not available, and private system access requires a controlled integration such as a function tool.
-
-### 12. G12 — Unit 3
-
-*Matching · Understand code interpreter behavior · 4 points*
-
-Match each code_interpreter characteristic to its implication.
+For each prompt-structure statement, select Yes if the statement is true. Otherwise, select No.
 
 **Answer:**
 
-| Item | Correct match |
+| Statement | Answer |
 | --- | --- |
-| Sandboxed execution | Generated code runs in an isolated environment rather than on the application host. |
-| Common preinstalled libraries | Packages such as pandas, NumPy, and matplotlib may be available for analysis. |
-| Execution feedback | The model can inspect errors or results and revise its code. |
-| File handling | The runtime can process supported uploaded data and produce downloadable artifacts. |
+| Headings, XML-style tags, or separators can help distinguish instructions from source content. | **Yes** |
+| Text near the end of a prompt can have disproportionate influence because of recency bias. | **Yes** |
+| Repeating a critical instruction at the end always guarantees that the model follows it. | **No** |
 
-**Rationale.** Isolation, useful libraries, iterative execution feedback, and supported file handling are distinct features of code interpreter.
+**Rationale.** Clear boundaries reduce ambiguity, and recency bias can make later text more influential. Repetition can help but does not turn probabilistic behavior into a guarantee.
+
+### 11. G11 — Unit 2
+
+*Multiple choice · Configure generation parameters · 4 points*
+
+Which four statements about temperature and top_p are accurate? Select four answers.
+
+**Answer** (select 4):
+
+- Lower temperature generally favors focused, repeatable output.
+- Higher temperature can increase variety for creative tasks.
+- Top_p limits candidate tokens by cumulative probability mass.
+- A practical starting guideline is to tune temperature or top_p rather than changing both together.
+
+**Rationale.** Both settings affect sampling at inference time. Temperature changes randomness, while top_p restricts the probability mass considered. Neither performs retrieval nor training, and changing both simultaneously makes the effect harder to attribute.
+
+### 12. G12 — Unit 2
+
+*Single choice · Configure generation parameters · 1 point*
+
+A hotel-amenity answer must be factual and stable across repeated requests. Which initial temperature choice is most appropriate?
+
+**Answer:** A low value such as 0.2
+
+**Rationale.** A low temperature favors focused, less variable output and is a sensible starting point for factual tasks. It does not guarantee correctness, so grounding and evaluation may still be required.
 
 ### 13. G13 — Unit 3
 
-*Yes / No · Respect code interpreter limitations · 4 points*
+*Build list · Implement RAG · 3 points*
 
-For each statement about code_interpreter limitations, select Yes if the statement is true. Otherwise, select No.
+Arrange the core RAG stages in the order used for one user request.
 
-**Answer:**
+**Answer** (correct sequence):
 
-| Statement | Answer |
-| --- | --- |
-| The sandbox has no external network access. | **Yes** |
-| Timeout and memory limits can affect long-running or very large workloads. | **Yes** |
-| Every Python package available on the public internet is guaranteed to be installed. | **No** |
-| AI-generated code and results should be reviewed before production use. | **Yes** |
+1. Retrieve information relevant to the user's question.
+2. Add the selected evidence to the model input.
+3. Generate an answer from the augmented request.
 
-**Rationale.** The runtime is network-isolated and resource-constrained, and library availability is finite. Generated code can be wrong, so validation remains important.
+**Rationale.** RAG means retrieve, augment, and generate. The application first finds relevant evidence, supplies it as context, and then asks the model to answer from that augmented input.
 
 ### 14. G14 — Unit 3
 
-*Build list · Use code interpreter · 5 points*
+*Single choice · Ground model responses · 1 point*
 
-Arrange the code_interpreter flow from request to answer.
+Why can prompt engineering alone not reliably answer questions about a private catalog that was updated after the model was trained?
 
-**Answer** (correct sequence):
+**Answer:** Instructions can guide behavior but cannot supply facts the request never provides.
 
-1. The application includes code_interpreter in the tools list.
-2. The model determines that code execution is useful.
-3. The model generates Python code for the task.
-4. The generated code runs in the sandbox.
-5. The model incorporates execution output into its response.
-
-**Rationale.** The tool is first made available, after which the model chooses it, writes code, receives sandbox output, and uses that output in the answer.
+**Rationale.** Prompt engineering controls how the model responds, but the model still needs the relevant facts. RAG retrieves current or private evidence and inserts it into the request without retraining the model.
 
 ### 15. G15 — Unit 3
 
-*Multiple choice · Operate code interpreter responsibly · 4 points*
+*Matching · Choose retrieval methods · 4 points*
 
-Which four practices improve a code_interpreter implementation? Select four answers.
-
-**Answer** (select 4):
-
-- Describe the input format and expected output clearly.
-- Review generated code and results for correctness.
-- Monitor token and execution costs.
-- Design for timeouts, unavailable libraries, and data-size limits.
-
-**Rationale.** Specific prompts, validation, cost monitoring, and robust limit handling improve reliability. The sandbox has no external network, and high-stakes results still need appropriate review.
-
-### 16. G16 — Unit 4
-
-*Single choice · Use web search · 1 point*
-
-When is web_search more appropriate than relying only on model training data?
-
-**Answer:** When the answer depends on current, publicly available information.
-
-**Rationale.** Web search retrieves fresh public information. Private documents belong in controlled retrieval, calculations fit code interpreter, and transactions should use authorized application logic.
-
-### 17. G17 — Unit 4
-
-*Multiple choice · Use web search · 4 points*
-
-Which four scenarios are good candidates for web_search? Select four answers.
-
-**Answer** (select 4):
-
-- Summarize a breaking technology announcement.
-- Compare recently published product prices.
-- Check whether public regulations or guidance changed.
-- Verify a public claim against reputable current sources.
-
-**Rationale.** Web search is designed for recent, external, publicly indexable information. Private content and business actions need different tools.
-
-### 18. G18 — Unit 4
-
-*Matching · Understand web search behavior · 4 points*
-
-Match each web_search stage to what happens.
+Match each Azure AI Search approach to its defining behavior.
 
 **Answer:**
 
-| Item | Correct match |
+| Item | Match |
 | --- | --- |
-| Question evaluation | The model determines whether fresh web information is needed. |
-| Query generation | The model formulates one or more searches based on user intent. |
-| Result review | Relevant public pages are selected and summarized. |
-| Response generation | Search findings are incorporated into a source-grounded answer. |
+| Keyword search | Matches exact terms in the query and indexed text |
+| Semantic search | Uses semantic models to rank by meaning rather than only exact terms |
+| Vector search | Finds nearby embedding vectors representing similar content |
+| Hybrid search | Combines lexical and meaning-based techniques in one retrieval strategy |
 
-**Rationale.** Web search combines tool selection, automatic query generation, source review, and answer synthesis in one response flow.
+**Rationale.** Keyword search is lexical, semantic search interprets meaning, vector search compares embeddings, and hybrid search combines approaches. The module recommends hybrid search as a strong default for generative AI retrieval.
 
-### 19. G19 — Unit 4
+### 16. G16 — Unit 3
 
-*Yes / No · Evaluate web-grounded output · 4 points*
+*Multiple choice · Select RAG scenarios · 4 points*
 
-For each statement about web_search output, select Yes if the statement is true. Otherwise, select No.
+Which four requirements are strong reasons to use RAG? Select four answers.
+
+**Answer** (select 4):
+
+- Answer from private organizational policies
+- Reflect inventory that changes every hour
+- Ground high-stakes factual claims in approved evidence
+- Use information published after the base model's training cutoff
+
+**Rationale.** RAG is designed for private, current, domain-specific, and evidence-sensitive knowledge. Fine-tuning addresses persistent behavior patterns, while no optimization removes the need for evaluation.
+
+### 17. G17 — Unit 3
+
+*Yes / No · Use embeddings · 3 points*
+
+For each statement about embeddings and vector retrieval, select Yes if the statement is true. Otherwise, select No.
 
 **Answer:**
 
 | Statement | Answer |
 | --- | --- |
-| Source citations or annotations help users inspect the evidence behind an answer. | **Yes** |
-| Public-web source quality can vary, so critical claims may require independent verification. | **Yes** |
-| Repeated searches are guaranteed to return identical content and wording. | **No** |
-| Regional, policy, or network restrictions can affect web-search availability. | **Yes** |
+| An embedding represents semantic features as a numeric vector. | **Yes** |
+| Semantically similar text can have nearby vectors even when it uses different words. | **Yes** |
+| A cosine similarity value near 1 generally indicates low semantic similarity. | **No** |
 
-**Rationale.** Citations improve transparency, but public sources can vary and change over time. Availability and results can also be affected by environment and policy restrictions.
+**Rationale.** Embeddings encode meaning numerically, enabling semantically similar passages to be found without exact wording. For cosine similarity, a value near 1 indicates strong similarity, not weak similarity.
 
-### 20. G20 — Unit 4
+### 18. G18 — Unit 3
 
-*Build list · Use web search · 5 points*
+*Build list · Build a retrieval pipeline · 4 points*
 
-Arrange a sound workflow for answering a time-sensitive public-information question.
-
-**Answer** (correct sequence):
-
-1. Analyze the question and define the required current time scope.
-2. Construct the Responses API request with web_search declared.
-3. Let the service search and retrieve relevant public-web evidence.
-4. Render the answer with its citation annotations as inspectable sources.
-5. Independently verify material high-stakes claims before acting.
-
-**Rationale.** The stages are intentionally distinct: analyze the time scope, construct the tool-enabled request, let the service retrieve evidence, render citation annotations, and independently verify consequential claims before action.
-
-### 21. G21 — Unit 4
-
-*Multiple choice · Operate web search efficiently · 4 points*
-
-Which four practices improve web_search quality or operations? Select four answers.
-
-**Answer** (select 4):
-
-- Specify words such as current, latest, or a date range when recency matters.
-- Request reputable or official sources when accuracy matters.
-- Treat retrieved page content as untrusted, keep secrets out of tool-visible context, and do not let page text override trusted instructions.
-- Track retrieval latency, token usage, and cost.
-
-**Rationale.** Time scope, source expectations, a firm trust boundary, and telemetry improve usefulness and safety. Public pages can contain prompt injection or misleading content, so retrieved text is data rather than trusted instructions, and secrets should not enter tool-visible context.
-
-### 22. G22 — Unit 5
-
-*Single choice · Use file search · 1 point*
-
-Which tool should an application use when answers must be grounded in its own uploaded policy documents?
-
-**Answer:** file_search
-
-**Rationale.** File search retrieves relevant passages from uploaded, indexed documents. It is the official module-assessment answer for policy-document grounding.
-
-### 23. G23 — Unit 5
-
-*Build list · Prepare content for file search · 4 points*
-
-Arrange the basic file_search setup and request flow.
+Arrange these implementation activities from data preparation through a grounded response.
 
 **Answer** (correct sequence):
 
-1. Create a vector store for the document collection.
-2. Upload files and wait for indexing to complete.
-3. Submit a response request that declares file_search and the vector store ID.
-4. The service injects relevant retrieved passages for answer generation.
+1. Add approved source content from storage or uploaded files.
+2. Create and store embeddings in an Azure AI Search index.
+3. Convert the user query for retrieval and search the index.
+4. Insert the retrieved passages into the request and generate an answer.
 
-**Rationale.** Documents must be stored and indexed before a response can search them. The request identifies the vector store, and retrieved passages become grounding context for the model.
+**Rationale.** Content must be available before it can be indexed. At request time the query is represented for search, relevant passages are retrieved, and those passages augment the model input.
 
-### 24. G24 — Unit 5
+### 19. G19 — Unit 3
 
-*Matching · Configure file search · 4 points*
+*Single choice · Choose retrieval methods · 1 point*
 
-Match each file_search element to its purpose.
+A knowledge base contains exact product codes as well as natural-language descriptions. Which search approach best preserves exact matching while also finding semantically related passages?
+
+**Answer:** Hybrid search
+
+**Rationale.** Hybrid search combines lexical signals that retain exact product-code matches with vector or semantic signals that capture meaning. Using only one side can miss relevant evidence.
+
+### 20. G20 — Unit 3
+
+*Matching · Design RAG components · 4 points*
+
+Match each RAG component to its responsibility.
 
 **Answer:**
 
-| Item | Correct match |
+| Item | Match |
 | --- | --- |
-| vector_stores.create() | Creates a named searchable document collection. |
-| upload_and_poll() | Uploads content and waits for processing and indexing to finish. |
-| vector_store_ids | Scopes a file_search tool to one or more indexed collections. |
-| include=["file_search_call.results"] | Returns retrieval details for development, debugging, or traceability. |
+| Approved data source | Holds the authoritative documents or records |
+| Embedding model | Transforms content and queries into semantic vectors |
+| Azure AI Search index | Stores searchable fields and returns relevant passages |
+| Generation model | Uses the retrieved context to compose the final response |
 
-**Rationale.** Creation, ingestion, request scoping, and optional result inspection are separate parts of the file-search workflow.
+**Rationale.** A RAG system separates authority, representation, retrieval, and generation. Understanding these boundaries helps diagnose whether a failure originated in the data, index, search step, or model response.
 
-### 25. G25 — Unit 5
+### 21. G21 — Unit 3
 
-*Multiple choice · Understand file search · 4 points*
+*Yes / No · Evaluate RAG · 3 points*
 
-Which four statements describe file_search capabilities? Select four answers.
-
-**Answer** (select 4):
-
-- It can ground answers in private or domain-specific uploaded documents.
-- It performs semantic retrieval rather than relying only on exact keywords.
-- It searches indexed collections represented by vector stores.
-- It can expose matched retrieval results for debugging and traceability.
-
-**Rationale.** File search works over deliberately uploaded and indexed collections and can surface retrieval evidence. Its quality is bounded by document coverage and retrieval relevance.
-
-### 26. G26 — Unit 5
-
-*Yes / No · Maintain file-search grounding · 4 points*
-
-For each statement about file_search quality, select Yes if the statement is true. Otherwise, select No.
+For each statement about RAG quality, select Yes if the statement is true. Otherwise, select No.
 
 **Answer:**
 
 | Statement | Answer |
 | --- | --- |
-| Clean, current source documents generally improve retrieval quality. | **Yes** |
-| Updated source content may need re-indexing before the changes are searchable. | **Yes** |
-| A very large mixed-domain store always produces more focused matches. | **No** |
-| Sensitive or high-stakes answers can still require human review. | **Yes** |
+| Response quality depends partly on source quality, chunking, indexing, and retrieval relevance. | **Yes** |
+| Adding RAG guarantees that every generated statement is factually correct. | **No** |
+| Frequently changing data can be refreshed in the index without retraining the language model. | **Yes** |
 
-**Rationale.** Source quality, coverage, indexing freshness, and collection scope affect retrieval. More mixed content can reduce focus, and grounding does not eliminate review requirements.
+**Rationale.** RAG can improve grounding, but weak sources or retrieval can still produce poor context and generation can still fail. Its advantage for dynamic knowledge is that the external source and index can be updated independently of model training.
 
-### 27. G27 — Unit 5
+### 22. G22 — Unit 4
 
-*Single choice · Inspect file-search retrieval · 1 point*
+*Single choice · Decide when to fine-tune · 1 point*
 
-Which request option helps a developer inspect the passages returned by file_search?
+A model has access to all required facts and receives a tested system message with examples, but it still violates the required response schema unpredictably. Which next step is most appropriate?
 
-**Answer:** include=["file_search_call.results"]
+**Answer:** Evaluate supervised fine-tuning with representative prompt-and-response examples.
 
-**Rationale.** Including `file_search_call.results` exposes retrieval results for debugging and traceability. The other parameters do not request retrieved passages.
+**Rationale.** Persistent style or format inconsistency after prompt engineering is a suitable fine-tuning scenario. RAG addresses missing knowledge, while a higher temperature would generally increase variability.
 
-### 28. G28 — Unit 5
+### 23. G23 — Unit 4
 
-*Multiple choice · Design file-search collections · 3 points*
+*Matching · Compare fine-tuning methods · 5 points*
 
-Which three practices support effective and secure file_search collections? Select three answers.
-
-**Answer** (select 3):
-
-- Separate unrelated domains into appropriately scoped vector stores.
-- Authorize the signed-in caller in application code and pass only vector_store_ids that caller is permitted to search.
-- Remove or replace stale documents and re-index changed content.
-
-**Rationale.** Domain scoping and content lifecycle management improve relevance. The application must authorize the caller and expose only permitted vector_store_ids; prompt instructions and citations are not access controls.
-
-### 29. G29 — Unit 6
-
-*Single choice · Implement function calling · 1 point*
-
-What happens when a model selects a developer-defined function tool?
-
-**Answer:** The model emits a structured function_call, and the application decides whether and how to execute it.
-
-**Rationale.** The model requests a call; it does not run business logic. Client code validates the request, invokes approved logic, and returns output for the model to continue.
-
-### 30. G30 — Unit 6
-
-*Matching · Understand function-call data · 5 points*
-
-Match each function-calling element to its role.
+Match each customization term to its description.
 
 **Answer:**
 
-| Item | Correct match |
+| Item | Match |
 | --- | --- |
-| Function name | Identifies which approved operation the model is requesting. |
-| Function description | Helps the model understand when the operation is appropriate. |
-| Function arguments | Carries model-generated input values that application code must validate. |
-| call_id | Correlates a returned result with the specific function request. |
-| function_call_output | Carries the application's execution result back into the conversation. |
+| Supervised fine-tuning | Learns from labeled prompt-and-response examples |
+| Reinforcement fine-tuning | Uses a grader and iterative rewards to improve responses |
+| Direct Preference Optimization | Aligns behavior from preferred and non-preferred response pairs |
+| LoRA | Approximates weight updates through a lower-rank representation |
+| Distillation | Transfers useful behavior from a larger model to a smaller model |
 
-**Rationale.** A function definition guides selection, generated arguments describe the requested work, and the call ID connects the application result to the original call.
+**Rationale.** SFT learns demonstrations, RFT optimizes against grader feedback, and DPO learns pairwise preferences. LoRA makes adaptation more efficient, while distillation targets a smaller and potentially cheaper or faster model.
 
-### 31. G31 — Unit 6
+### 24. G24 — Unit 4
 
-*Build list · Implement function calling · 6 points*
+*Multiple choice · Select fine-tuning scenarios · 5 points*
 
-Arrange the function-calling loop in the correct order.
+Which five goals can justify evaluating fine-tuning? Select five answers.
 
-**Answer** (correct sequence):
+**Answer** (select 5):
 
-1. Declare the functions and send the initial Responses API request.
-2. Inspect response.output and collect every function_call item.
-3. For every collected call, validate the function name and arguments, authorize the caller, and execute only approved code.
-4. Build one function_call_output item for each original call_id.
-5. Submit all function_call_output items together in a follow-up request that sets previous_response_id.
-6. Repeat the loop until a response contains no function_call items, then use the final answer.
+- Enforce a brand style more consistently
+- Produce a defined output schema more reliably
+- Shorten a large repeated instruction-and-example prompt
+- Improve tool selection from representative tool-use examples
+- Distill behavior into a smaller model for lower cost or latency
 
-**Rationale.** A robust orchestrator inspects all output items, processes every requested call through application validation and authorization, returns one correlated output per call_id in one follow-up, and repeats because later responses can request more functions.
+**Rationale.** Fine-tuning can improve persistent behavior, embed demonstrated patterns, reduce repeated prompt content, and support distillation. It is not a retrieval mechanism for current facts and introduces rather than eliminates lifecycle costs.
 
-### 32. G32 — Unit 6
+### 25. G25 — Unit 4
 
-*Multiple choice · Secure function execution · 4 points*
+*Yes / No · Understand fine-tuning · 3 points*
 
-Which four controls are appropriate before executing a requested function? Select four answers.
-
-**Answer** (select 4):
-
-- Allowlist recognized function names.
-- Validate argument types, ranges, and business rules.
-- Check the caller's authorization for the requested action.
-- Require confirmation or approval for high-impact operations.
-
-**Rationale.** Structured output is not trusted input. The application should constrain functions, validate arguments, enforce user permissions, and add approval controls for consequential actions.
-
-### 33. G33 — Unit 6
-
-*Yes / No · Understand function calling · 4 points*
-
-For each statement about function calling, select Yes if the statement is true. Otherwise, select No.
+For each fine-tuning statement, select Yes if the statement is true. Otherwise, select No.
 
 **Answer:**
 
 | Statement | Answer |
 | --- | --- |
-| In a Responses API function tool, name, description, parameters, and optional strict are siblings of type: "function". | **Yes** |
-| tool_choice: "auto" forces the model to use at least one configured tool. | **No** |
-| tool_choice: "required" requires the model to use at least one configured tool. | **Yes** |
-| strict: true eliminates the application's need to validate arguments and authorize the requested action. | **No** |
+| Fine-tuning adjusts a pretrained model using a smaller task-specific dataset. | **Yes** |
+| Fine-tuning a model on last month's catalog is the preferred way to retrieve today's prices. | **No** |
+| A fine-tuned model generally retains broad capabilities while learning specialized patterns. | **Yes** |
 
-**Rationale.** Responses function fields use the flat tool shape. `auto` permits a direct answer or tool use, whereas `required` requires at least one tool. Strict schema adherence reduces malformed arguments but never replaces application validation or authorization.
+**Rationale.** Fine-tuning specializes a pretrained model by changing its learned behavior. Fast-changing facts should remain in an external source retrieved at request time, not be frozen into periodic training data.
 
-### 34. G34 — Unit 6
+### 26. G26 — Unit 4
 
-*Single choice · Return function output · 1 point*
+*Single choice · Evaluate fine-tuning · 1 point*
 
-Why must a function_call_output include the call_id from the model's function_call item?
+Why must a team record a base-model baseline before fine-tuning?
 
-**Answer:** To associate the application result with the exact function request that produced it.
+**Answer:** To determine whether the customized model improved target behavior or caused regressions
 
-**Rationale.** The call ID is the correlation identifier between a function request and its output. Authentication, model routing, and vector-store selection use different configuration.
+**Rationale.** A baseline provides comparative evidence. The same representative tests should be run against the base and fine-tuned deployments so quality, consistency, cost, and latency trade-offs are visible.
 
-### 35. G35 — Unit 6
+### 27. G27 — Unit 4
 
-*Multiple choice · Operate functions safely · 4 points*
+*Multiple choice · Prepare fine-tuning data · 5 points*
 
-Which four operational practices improve a function-tool implementation? Select four answers.
+Which five practices support a useful supervised fine-tuning dataset for a chat model? Select five answers.
 
-**Answer** (select 4):
+**Answer** (select 5):
 
-- Keep functions focused and single-purpose.
-- Return clear, bounded error results the model can reason about.
-- Log calls, latency, outcomes, and failures for audit and debugging.
-- Apply timeouts and idempotency protections where appropriate.
+- Store one valid JSON object per line in JSONL format.
+- Include system, user, and assistant messages in each conversation example.
+- Use high-quality examples representative of expected production scenarios.
+- Make assistant responses demonstrate the exact desired tone and format.
+- Use a consistent system message and also use it at inference time.
 
-**Rationale.** Narrow contracts, safe errors, observability, and resilience controls make integrations easier to test and govern. Sensitive diagnostics and uncontrolled retries create security or duplication risks.
+**Rationale.** The dataset should be valid JSONL and consistently demonstrate the production interaction and target output. Contradictory or unrepresentative examples teach conflicting patterns, and omitting the system message tends to reduce accuracy.
 
-### 36. G36 — Unit 6
+### 28. G28 — Unit 4
 
-*Matching · Choose and combine tools · 4 points*
+*Build list · Run a fine-tuning lifecycle · 5 points*
 
-Match each requirement to the best primary tool.
-
-**Answer:**
-
-| Item | Correct match |
-| --- | --- |
-| Calculate correlations in an uploaded CSV. | code_interpreter |
-| Find today's public transit advisory. | web_search |
-| Answer from an indexed internal maintenance manual. | file_search |
-| Submit an authorized maintenance work order through an internal API. | function |
-
-**Rationale.** The requirement determines the tool: computation, public recency, private retrieval, or controlled business-system action. An application can declare multiple tools when a scenario spans these needs.
-
-### 37. G37 — Unit 7
-
-*Build list · Complete the tools exercise · 6 points*
-
-According to the currently documented hands-on exercise, arrange these major stages.
+Arrange these fine-tuning activities into a defensible lifecycle.
 
 **Answer** (correct sequence):
 
-1. Deploy gpt-5.2 in a Microsoft Foundry project.
-2. Configure the Azure OpenAI endpoint and exact model deployment name.
-3. Create the travel-brochures vector store and upload the brochure PDFs.
-4. Call responses.create() with web_search, file_search, and response-ID state.
-5. Run the app and test a current destination question followed by a brochure-specific question.
-6. Delete the resource group when the resources are no longer needed.
+1. Establish a base-model evaluation baseline.
+2. Prepare and validate representative training examples.
+3. Submit and monitor the fine-tuning job.
+4. Deploy the resulting model and compare it with the base deployment.
+5. Re-evaluate after deployment and inspect regressions.
 
-**Rationale.** The currently documented lab uses gpt-5.2 and moves from project and model setup to client configuration, vector-store ingestion, a combined tool request, conversational testing, and resource cleanup. Lab versions can change, so follow the current exercise when performing it.
+**Rationale.** The baseline precedes training, clean data precedes job submission, and a completed model must be deployed before comparative inference testing. Final evaluation determines whether the result is worth operating.
 
-### 38. G38 — Unit 7
+### 29. G29 — Unit 4
 
-*Single choice · Configure the tools exercise · 1 point*
+*Matching · Manage fine-tuning risks · 5 points*
 
-Which connection pattern does the exercise use for its Python application?
+Match each fine-tuning risk or cost to its practical meaning.
 
-**Answer:** The OpenAI SDK with the Azure OpenAI endpoint and Microsoft Entra ID.
+**Answer:**
 
-**Rationale.** The documented exercise uses the OpenAI SDK with the Azure OpenAI endpoint and creates an Entra token provider. The other choices change the endpoint, SDK, or authentication pattern used by the lab.
+| Item | Match |
+| --- | --- |
+| Overfitting | The model memorizes or specializes too closely and generalizes poorly. |
+| Underfitting | The customization does not learn the target pattern strongly enough. |
+| Bias from training data | Unrepresentative examples cause systematically skewed behavior. |
+| Model drift from narrow specialization | Performance on broad language tasks declines outside the trained domain. |
+| Maintenance cost | Data or base-model changes require new validation and possibly retraining. |
 
-### 39. G39 — Unit 7
+**Rationale.** Fine-tuning has both model-quality risks and lifecycle costs. Dataset design, hyperparameter experiments, broad regression tests, and ongoing maintenance are part of the engineering work.
 
-*Multiple choice · Implement the tools exercise · 4 points*
+### 30. G30 — Unit 4
 
-Which four implementation details are part of the documented tools exercise? Select four answers.
+*Yes / No · Prepare fine-tuning data · 3 points*
 
-**Answer** (select 4):
-
-- The vector store is named travel-brochures.
-- The app uploads PDF files from the brochures folder and waits for ingestion.
-- The Responses request declares both file_search and web_search.
-- The app saves response.id and supplies it as previous_response_id on the next turn.
-
-**Rationale.** The lab builds a named vector store, uploads local PDFs, enables two retrieval tools, and chains response IDs for follow-up context. Cleanup is a deliberate Azure administration step, not a model tool action.
-
-### 40. G40 — Unit 7
-
-*Yes / No · Validate and clean up the tools exercise · 4 points*
-
-For each statement about the exercise, select Yes if the statement is true. Otherwise, select No.
+For each statement about training and inference messages, select Yes if the statement is true. Otherwise, select No.
 
 **Answer:**
 
 | Statement | Answer |
 | --- | --- |
-| A question about events next month should normally exercise web_search. | **Yes** |
-| A follow-up asking which hotels Margie's Travel offers should normally exercise file_search. | **Yes** |
-| previous_response_id automatically carries the prior request's instructions, so the app can omit them on later turns. | **No** |
-| Deleting the resource group is appropriate when the lab resources are no longer needed. | **Yes** |
+| A consistent nonempty system message in training examples can improve learned behavior. | **Yes** |
+| The system message used during training should also be supplied when the fine-tuned model is used for inference. | **Yes** |
+| Once a model is fine-tuned, no further prompt instructions or evaluation are ever useful. | **No** |
 
-**Rationale.** The lab tests current public retrieval, private brochure retrieval, response-ID conversation state, and cleanup. `previous_response_id` chains conversation items, but prior instructions are not automatically carried forward; resend instructions on later requests when they must continue to apply.
+**Rationale.** The module recommends a consistent system message in training and reuse of that message at inference. Fine-tuning establishes baseline behavior, while request-specific prompts, guardrails, and continuing evaluation still matter.
 
-### 41. G41 — Unit 8
+### 31. G31 — Unit 4
 
-*Matching · Apply the official module assessment · 3 points*
+*Single choice · Manage fine-tuning risks · 1 point*
 
-Match each official module-assessment scenario to the correct response.
+After customization, a model follows the target support script well but performs worse on ordinary language tasks outside support. Which challenge does this illustrate?
+
+**Answer:** Model drift caused by overly narrow specialization
+
+**Rationale.** A model can become less effective outside its fine-tuned domain when specialization is too narrow. Broad regression tests help reveal this loss of general capability.
+
+### 32. G32 — Unit 5
+
+*Matching · Choose optimization strategies · 4 points*
+
+Match each requirement or observed gap to the strategy that most directly addresses it.
 
 **Answer:**
 
-| Item | Correct match |
+| Item | Match |
 | --- | --- |
-| Answer questions from uploaded policy documents. | Use file_search. |
-| Handle a function_call returned by the model. | Run the approved function in application code and return function_call_output. |
-| Run Python to help solve a task. | Use code_interpreter in its sandboxed runtime. |
+| Quickly change tone and request-time instructions | Prompt engineering |
+| Answer from a catalog that changes frequently | RAG |
+| After tested prompts remain inconsistent, make a stable schema and brand style more reliable | Fine-tuning |
+| Use current catalog facts with a consistent brand voice and session-specific guardrails | Prompt engineering, RAG, and fine-tuning together |
 
-**Rationale.** These are the three concepts tested by the official assessment: private document retrieval, the client-controlled function loop, and sandboxed Python execution.
+**Rationale.** Prompting controls request-time behavior, RAG supplies changing facts, and fine-tuning improves persistent patterns. Demanding applications can layer all three because each solves a different problem.
 
-### 42. G42 — Unit 9
+### 33. G33 — Unit 5
 
-*Build list · Summarize the shared tool pattern · 4 points*
+*Single choice · Choose optimization strategies · 1 point*
 
-Arrange the shared implementation pattern summarized by the module.
+Which strategy should normally be tested first when optimizing a new generative AI application?
+
+**Answer:** Prompt engineering
+
+**Rationale.** Prompt engineering is the fastest, least complex, and lowest-upfront-cost option. Teams should start simple, evaluate, and add retrieval or fine-tuning only when requirements show that prompting is insufficient.
+
+### 34. G34 — Unit 5
+
+*Multiple choice · Combine optimization strategies · 4 points*
+
+An application requires current private facts, a stable brand style, and campaign-specific instructions. Which four design choices align with those needs? Select four answers.
+
+**Answer** (select 4):
+
+- Use RAG to retrieve current private facts.
+- Use fine-tuning to improve persistent brand-style consistency.
+- Use a system message for campaign-specific instructions and guardrails.
+- Evaluate the combined system against the baseline and representative cases.
+
+**Rationale.** The three optimization layers address knowledge, persistent behavior, and request-specific direction. Evaluation remains necessary because retrieval and generation can each introduce failure modes.
+
+### 35. G35 — Unit 5
+
+*Yes / No · Compare optimization trade-offs · 3 points*
+
+For each strategy trade-off, select Yes if the statement is true. Otherwise, select No.
+
+**Answer:**
+
+| Statement | Answer |
+| --- | --- |
+| Long prompts can increase per-request token use and latency. | **Yes** |
+| RAG adds search, storage, indexing, and retrieval-quality concerns. | **Yes** |
+| Fine-tuning has no upfront training or ongoing hosting cost. | **No** |
+
+**Rationale.** Prompting can become expensive when repeated context is large, RAG introduces retrieval infrastructure, and fine-tuning has the highest upfront complexity plus training, hosting, data, and maintenance costs.
+
+### 36. G36 — Unit 5
+
+*Build list · Apply the optimization decision framework · 5 points*
+
+Arrange the module's incremental strategy decisions in order.
 
 **Answer** (correct sequence):
 
-1. Define the allowed tool or tools in the request.
-2. Let the model decide when an allowed tool is appropriate.
-3. Return tool output when the selected tool requires client-side execution.
-4. Validate the answer and tool behavior for correctness and safety.
+1. Start with prompt design, examples, and supported parameter tuning.
+2. Evaluate each change against requirements and the baseline.
+3. Add RAG if the model requires specific, private, or current knowledge.
+4. Add fine-tuning if persistent style or format remains inconsistent.
+5. Combine only the layers required by measured application needs.
 
-**Rationale.** Across tools, the application declares capabilities, the model normally selects among them, client-side tools require returned output, and the application remains responsible for validation and safety.
+**Rationale.** The framework begins with the simplest intervention and evidence. RAG addresses a knowledge gap, fine-tuning addresses a persistent behavior gap, and combinations should be justified rather than assumed.
+
+### 37. G37 — Unit 5
+
+*Single choice · Combine optimization strategies · 1 point*
+
+A service must answer with today's policy facts and use a highly consistent regulated disclosure format. Which combination most directly addresses both requirements?
+
+**Answer:** RAG for current policies and fine-tuning for the persistent disclosure format
+
+**Rationale.** RAG supplies changing evidence, while fine-tuning can improve consistent behavior and structure. Request-time instructions and validation can still be layered on top.
+
+### 38. G38 — Unit 6
+
+*Single choice · Complete the gpt-5 fine-tuning exercise · 1 point*
+
+In the 04b exercise, why is a base gpt-5 deployment created before the fine-tuning job?
+
+**Answer:** It provides a base-model behavior baseline for comparison.
+
+**Rationale.** The lab tests a normal gpt-5 deployment first so the team can compare its responses with the fine-tuned deployment using aligned instructions and prompts.
+
+### 39. G39 — Unit 6
+
+*Build list · Complete the gpt-5 fine-tuning exercise · 6 points*
+
+Arrange these major 04b lab activities in the documented sequence.
+
+**Answer** (correct sequence):
+
+1. Create a Foundry project and deploy the gpt-5 base model.
+2. Submit the supervised fine-tuning job and monitor it while other work continues.
+3. Test and refine the base model's travel-assistant instructions.
+4. Review the JSONL conversations that demonstrate the desired style.
+5. Test the automatically deployed fine-tuned model with the same instructions and prompts.
+6. Delete the exercise resource group when it is no longer needed.
+
+**Rationale.** The lab deploys the base model, starts the long-running training job early, uses the waiting time to establish base behavior, inspects the examples, compares the finished deployment, and finally cleans up billable resources.
+
+### 40. G40 — Unit 6
+
+*Matching · Configure the gpt-5 fine-tuning exercise · 6 points*
+
+Match each 04b fine-tuning setting to the value used in the exercise.
+
+**Answer:**
+
+| Item | Match |
+| --- | --- |
+| Base model | gpt-5 |
+| Training file | travel-finetune-hotel.jsonl |
+| Customization method | Supervised |
+| Training type | Standard |
+| Model suffix | ft-travel |
+| Deployment behavior | Automatically deploy as a Developer deployment |
+
+**Rationale.** The current lab configures supervised Standard training for gpt-5, uploads travel-finetune-hotel.jsonl, uses the ft-travel suffix, and requests automatic deployment with the Developer deployment type.
+
+### 41. G41 — Unit 7
+
+*Matching · Validate assessment concepts · 5 points*
+
+Match each optimization concept to the requirement it directly addresses.
+
+**Answer:**
+
+| Item | Match |
+| --- | --- |
+| System message | Defines request-time role, behavior, and output constraints |
+| RAG | Supplies external domain-specific or current evidence |
+| Temperature | Controls the degree of sampling variability |
+| Fine-tuning | Improves learned consistency of style, behavior, or format |
+| Combined strategy | Separates changing facts, persistent behavior, and session instructions into appropriate layers |
+
+**Rationale.** These are the core distinctions tested by the official assessment: prompting guides behavior, RAG provides knowledge, temperature affects variation, fine-tuning changes learned consistency, and a combined design assigns each concern to the right layer.
+
+### 42. G42 — Unit 8
+
+*Multiple choice · Synthesize optimization decisions · 4 points*
+
+Which four principles summarize a sound model-optimization approach? Select four answers.
+
+**Answer** (select 4):
+
+- Start with prompt engineering and a measured baseline.
+- Use RAG when answers require private, current, or source-grounded knowledge.
+- Consider fine-tuning when prompt engineering cannot make behavior sufficiently consistent.
+- Combine techniques only when distinct measured requirements justify the added layers.
+
+**Rationale.** The module treats prompt engineering, RAG, and fine-tuning as complementary. Start simple, map each technique to a requirement, and use repeatable evaluation to decide whether added cost and complexity are worthwhile.
 
 ## Case Study 1 — Contoso Travel
 
-*4 questions · 16 points*
+> **Scenario:** Contoso Travel is improving a customer trip-planning assistant. Its hotel catalog, prices, and availability change throughout the day. Responses must use only approved catalog facts, follow a warm brand voice, avoid offering booking services the company does not provide, and use a predictable recommendation format. The team has a representative evaluation set, a deployed gpt-5 base model, and high-quality example conversations. It must improve quality without adding unnecessary cost or latency.
 
-**Scenario.** Contoso Travel is building a customer-facing travel assistant. It must answer destination questions with current public information and answer company-specific questions from approved private brochures. The app uses a compatible model deployed in Microsoft Foundry, the Azure OpenAI endpoint, the Responses API, and Microsoft Entra ID. Customers ask follow-up questions, and answers should make their evidence clear. The team must control latency, cost, and access to private content.
+### 43. CT01 — Unit 2
 
-### 43. CT01 — Units 4 and 5
+*Single choice · Improve travel-assistant behavior · 1 point*
 
-*Multiple choice · Combine public and private retrieval · 2 points*
+Contoso first wants to define the assistant's role, prohibit unsupported booking offers, and require a three-item recommendation format. What is the lowest-complexity first step?
 
-Which two tools should Contoso declare for current destination events and approved brochure content? Select two answers.
+**Answer:** Create and evaluate a clear system message with an explicit format template.
 
-**Answer** (select 2):
+**Rationale.** These are request-time role, boundary, and formatting requirements, so prompt engineering is the appropriate first intervention. Contoso should measure compliance before deciding that persistent training is necessary.
 
-- web_search
-- file_search
+### 44. CT02 — Unit 3
 
-**Rationale.** Web search supplies current public destination information, while file search grounds company-specific answers in indexed brochures. Both can be declared in one Responses request.
+*Single choice · Ground catalog recommendations · 1 point*
 
-### 44. CT02 — Units 2, 4, and 5
+Which design best reduces the risk that Contoso's assistant invents hotel prices or recommends properties that are no longer available?
 
-*Matching · Route travel questions to evidence · 4 points*
+**Answer:** Retrieve relevant current catalog records at request time and include them as grounded context.
 
-Match each travel-assistant need to the best response strategy.
+**Rationale.** Availability and prices change frequently, making RAG the correct knowledge layer. Prompting can tell the model how to use evidence, but it cannot supply current facts by itself.
 
-**Answer:**
+### 45. CT03 — Unit 4
 
-| Item | Correct match |
-| --- | --- |
-| Events happening in Seattle next month | Use web_search. |
-| Hotels offered in Contoso's private brochure | Use file_search over the authorized vector store. |
-| Evidence for a current public claim | Expose or render the relevant web citation or annotation. |
-| Evidence for a brochure-specific claim | Inspect file-search results or citations from the indexed document. |
+*Multiple choice · Justify travel-assistant fine-tuning · 3 points*
 
-**Rationale.** The assistant should route current public facts and private catalog facts to different retrieval sources and preserve evidence appropriate to each.
+After prompt and RAG improvements, which three findings would support evaluating supervised fine-tuning for Contoso? Select three answers.
 
-### 45. CT03 — Units 2, 5, and 7
+**Answer** (select 3):
 
-*Yes / No · Secure and operate a multi-tool assistant · 4 points*
+- The brand voice is still inconsistent across representative requests.
+- The required recommendation schema is still violated frequently.
+- The repeated few-shot prompt materially increases token cost and latency.
 
-For each proposed Contoso design choice, select Yes if it is appropriate. Otherwise, select No.
+**Rationale.** Persistent style and schema problems, plus an expensive repeated demonstration prompt, are fine-tuning motivations. Catalog freshness and retrieval omissions belong to the RAG pipeline, and a missing baseline must be corrected before training.
+
+### 46. CT04 — Units 2, 3, 4, and 6
+
+*Build list · Run a comparative optimization experiment · 5 points*
+
+Arrange Contoso's activities into a defensible experiment modeled on the module and 04b lab.
+
+**Answer** (correct sequence):
+
+1. Record the gpt-5 base deployment's results on the representative evaluation set.
+2. Test a system message and few-shot examples against the baseline.
+3. Build RAG over the current catalog and retest the same cases.
+4. Create and submit supervised training data that demonstrates the approved voice and format.
+5. Compare base, prompted-and-grounded, and fine-tuned variants on quality, consistency, latency, and cost.
+
+**Rationale.** Contoso needs a baseline before interventions. Prompting addresses behavior first, RAG addresses catalog facts, and fine-tuning is justified only after persistent consistency needs remain. The final comparison exposes both improvements and operational trade-offs.
+
+## Case Study 2 — Fabrikam Knowledge
+
+> **Scenario:** Fabrikam is building an internal support assistant over policies and technical runbooks that change daily. Answers must be grounded in approved sources and returned in a concise schema. The current application sends a long instruction prompt with many examples, increasing token cost and latency, yet formatting is still inconsistent. Retrieval testing also shows that some relevant passages are missed. Fabrikam can improve its Azure AI Search index and can prepare a supervised fine-tuning dataset, but it must justify each additional layer with measured results.
+
+### 47. FK01 — Unit 3
+
+*Single choice · Diagnose enterprise retrieval · 1 point*
+
+Evaluation shows that Fabrikam often fails to retrieve an applicable policy passage even though the passage exists in the source. What should the team improve first?
+
+**Answer:** Chunking, index fields, query construction, and the hybrid retrieval configuration
+
+**Rationale.** The immediate failure is retrieval recall, so Fabrikam should diagnose the data and search pipeline. Fine-tuning cannot make missing evidence appear in the context supplied to the model.
+
+### 48. FK02 — Unit 5
+
+*Multiple choice · Balance quality, cost, and latency · 4 points*
+
+Which four actions form a measured optimization plan for Fabrikam? Select four answers.
+
+**Answer** (select 4):
+
+- Improve and evaluate retrieval before attributing factual failures to the generator.
+- Replace the longest repeated instructions with a concise tested system message.
+- Consider fine-tuning only if format inconsistency persists and the savings justify training and hosting.
+- Compare variants on groundedness, schema compliance, input tokens, latency, and cost.
+
+**Rationale.** The plan separates retrieval quality, prompt efficiency, and persistent format behavior, then measures the full trade-off. Frequently changing policies belong in the index, not repeated fine-tuning jobs.
+
+### 49. FK03 — Units 2, 4, and 5
+
+*Yes / No · Choose efficient optimization layers · 3 points*
+
+For each Fabrikam design statement, select Yes if it is true. Otherwise, select No.
 
 **Answer:**
 
 | Statement | Answer |
 | --- | --- |
-| Use Microsoft Entra ID, authorize the signed-in caller in application code, and pass only permitted vector_store_ids. | **Yes** |
-| Retain the last response ID so a follow-up such as 'Which hotels are there?' has conversational context. | **Yes** |
-| Treat any public search result as authoritative without reviewing source quality. | **No** |
-| Measure retrieval latency, tokens, and cost for requests that can invoke two tools. | **Yes** |
+| Fine-tuning can reduce input-token cost if it replaces many repeated examples with learned behavior. | **Yes** |
+| A low temperature makes a model aware of policy updates that were never retrieved. | **No** |
+| Fabrikam should compare a fine-tuned deployment with the same baseline before accepting the added hosting cost. | **Yes** |
 
-**Rationale.** Identity plus application-enforced authorization, permitted vector_store_ids, response chaining, and telemetry support a secure service. Prompts are not document access controls, and public grounding does not make every source authoritative.
+**Rationale.** Fine-tuning can embed repeated patterns and shorten prompts, but sampling settings cannot provide missing facts. Comparative evaluation is required to show that consistency or efficiency gains justify training and hosting.
 
-### 46. CT04 — Units 5 and 7
+### 50. FK04 — Units 3, 4, and 5
 
-*Build list · Prepare and test travel grounding · 6 points*
+*Matching · Map failures to interventions · 4 points*
 
-Arrange Contoso's private-content setup and conversational test.
-
-**Answer** (correct sequence):
-
-1. Create a vector store scoped to the travel brochures.
-2. Upload approved brochures and wait for indexing.
-3. Submit a current destination question with web_search and file_search available.
-4. Save the first response ID.
-5. Ask a follow-up brochure-specific question using the saved previous response ID.
-6. Verify that each claim is supported by the appropriate source.
-
-**Rationale.** The private collection must exist and be indexed before retrieval. The first response establishes context, the saved ID links the follow-up, and source verification closes the test.
-
-## Case Study 2 — Fabrikam Operations
-
-*4 questions · 15 points*
-
-**Scenario.** Fabrikam Operations is developing an internal assistant. Analysts upload CSV data for calculations, while authorized managers can request inventory lookups and purchase-order actions through company APIs. The company requires argument validation, least privilege, explicit authorization for high-impact actions, audit logs, and safe error handling. The model may request tools, but business logic must remain under application control.
-
-### 47. FO01 — Units 3 and 6
-
-*Matching · Choose controlled computation and actions · 4 points*
-
-Match each Fabrikam requirement to the best design choice.
+Match each observed Fabrikam symptom to the most direct intervention.
 
 **Answer:**
 
-| Item | Correct match |
+| Item | Match |
 | --- | --- |
-| Calculate statistics from an uploaded CSV | Use code_interpreter for sandboxed analysis. |
-| Read current inventory from an internal API | Expose a focused read-only function backed by the inventory API. |
-| Create a purchase order | Use a separately authorized function with confirmation and idempotency controls. |
-| Record tool activity for governance | Log function name, caller, arguments after redaction, latency, outcome, and call ID. |
+| Answers use yesterday's superseded policy. | Refresh the approved source and its search index. |
+| Relevant passages are absent from the retrieved context. | Improve chunking, query construction, and retrieval evaluation. |
+| The correct evidence is present, but the output schema is violated intermittently. | Refine the prompt first, then evaluate fine-tuning if the behavior remains inconsistent. |
+| A large block of repeated examples dominates token cost and latency. | Shorten the prompt and evaluate whether fine-tuning can learn the repeated pattern economically. |
 
-**Rationale.** Computation belongs in the sandbox, while private reads and state-changing actions belong behind focused application functions. Higher-impact operations need stronger controls and all tool activity needs appropriate auditability.
-
-### 48. FO02 — Unit 6
-
-*Multiple choice · Validate high-impact function calls · 4 points*
-
-The model requests create_purchase_order. Which four checks should Fabrikam perform before execution? Select four answers.
-
-**Answer** (select 4):
-
-- Confirm that create_purchase_order is on the function allowlist.
-- Validate item identifiers, quantities, limits, and argument types.
-- Verify that the signed-in manager is authorized for the requested purchase.
-- Require the configured confirmation or approval for the transaction.
-
-**Rationale.** The app must validate both the requested operation and its arguments, enforce the user's authority, and apply approval policy. Structured model output is not proof of safety or permission.
-
-### 49. FO03 — Units 3 and 6
-
-*Single choice · Respect sandbox boundaries · 1 point*
-
-An analyst asks code_interpreter to download live inventory directly from Fabrikam's private API. What should the team do?
-
-**Answer:** Use an authorized application function to retrieve the data, then provide only the necessary data to the analysis flow.
-
-**Rationale.** In the documented module configuration, code interpreter is not the component that authenticates to and calls Fabrikam's private API. A controlled application function can enforce identity, authorization, and data minimization before analysis occurs.
-
-### 50. FO04 — Unit 6
-
-*Build list · Complete an audited function-call loop · 6 points*
-
-Arrange the secure purchase-order function workflow.
-
-**Answer** (correct sequence):
-
-1. Submit the prompt with the focused function definition available.
-2. The model emits a create_purchase_order function_call.
-3. Validate the function name, arguments, caller authorization, and approval state.
-4. Execute the idempotent business operation and record an audit event.
-5. Send the bounded result as function_call_output with the matching call_id.
-6. The model produces a final user-facing response.
-
-**Rationale.** A safe loop exposes a narrow function, treats the model output as a request, validates before execution, performs and logs the approved action once, correlates the output, and lets the model formulate the final response.
+**Rationale.** Stale content and missed evidence are retrieval problems; intermittent formatting is a behavior problem; and a large repeated demonstration prompt is an efficiency problem. Mapping each symptom to its layer avoids unnecessary training and preserves current knowledge in RAG.
 
 ## Coverage by unit and domain
 
 | Unit | Domain | Questions | Points |
 | --- | --- | ---: | ---: |
-| Unit 1 | Explain why generative AI tools matter | 2 | 5 |
-| Unit 1 | Distinguish prompt tools from related services | 1 | 3 |
-| Unit 2 | Configure tools in a model request | 2 | 5 |
-| Unit 2 | Choose a tool for a requirement | 1 | 4 |
-| Unit 2 | Control tool selection | 1 | 3 |
-| Unit 2 | Plan compatible tool use | 1 | 1 |
-| Unit 2 | Implement tool-enabled responses | 1 | 5 |
-| Unit 3 | Use code interpreter | 3 | 10 |
-| Unit 3 | Understand code interpreter behavior | 1 | 4 |
-| Unit 3 | Respect code interpreter limitations | 1 | 4 |
-| Unit 3 | Operate code interpreter responsibly | 1 | 4 |
-| Unit 4 | Use web search | 3 | 10 |
-| Unit 4 | Understand web search behavior | 1 | 4 |
-| Unit 4 | Evaluate web-grounded output | 1 | 4 |
-| Unit 4 | Operate web search efficiently | 1 | 4 |
-| Unit 5 | Use file search | 1 | 1 |
-| Unit 5 | Prepare content for file search | 1 | 4 |
-| Unit 5 | Configure file search | 1 | 4 |
-| Unit 5 | Understand file search | 1 | 4 |
-| Unit 5 | Maintain file-search grounding | 1 | 4 |
-| Unit 5 | Inspect file-search retrieval | 1 | 1 |
-| Unit 5 | Design file-search collections | 1 | 3 |
-| Unit 6 | Implement function calling | 2 | 7 |
-| Unit 6 | Understand function-call data | 1 | 5 |
-| Unit 6 | Secure function execution | 1 | 4 |
-| Unit 6 | Understand function calling | 1 | 4 |
-| Unit 6 | Return function output | 1 | 1 |
-| Unit 6 | Operate functions safely | 1 | 4 |
-| Unit 6 | Choose and combine tools | 1 | 4 |
-| Unit 7 | Complete the tools exercise | 1 | 6 |
-| Unit 7 | Configure the tools exercise | 1 | 1 |
-| Unit 7 | Implement the tools exercise | 1 | 4 |
-| Unit 7 | Validate and clean up the tools exercise | 1 | 4 |
-| Unit 8 | Apply the official module assessment | 1 | 3 |
-| Unit 9 | Summarize the shared tool pattern | 1 | 4 |
-| Units 4 and 5 | Combine public and private retrieval | 1 | 2 |
-| Units 2, 4, and 5 | Route travel questions to evidence | 1 | 4 |
-| Units 2, 5, and 7 | Secure and operate a multi-tool assistant | 1 | 4 |
-| Units 5 and 7 | Prepare and test travel grounding | 1 | 6 |
-| Units 3 and 6 | Choose controlled computation and actions | 1 | 4 |
-| Unit 6 | Validate high-impact function calls | 1 | 4 |
-| Units 3 and 6 | Respect sandbox boundaries | 1 | 1 |
-| Unit 6 | Complete an audited function-call loop | 1 | 6 |
-| **Total** | | **50** | **173** |
+| Unit 1 | Plan model optimization | 2 | 6 |
+| Unit 2 | Engineer effective prompts | 4 | 12 |
+| Unit 2 | Apply prompt patterns | 3 | 7 |
+| Unit 2 | Structure prompts | 1 | 3 |
+| Unit 2 | Configure generation parameters | 2 | 5 |
+| Unit 3 | Implement RAG | 1 | 3 |
+| Unit 3 | Ground model responses | 1 | 1 |
+| Unit 3 | Choose retrieval methods | 2 | 5 |
+| Unit 3 | Select RAG scenarios | 1 | 4 |
+| Unit 3 | Use embeddings | 1 | 3 |
+| Unit 3 | Build a retrieval pipeline | 1 | 4 |
+| Unit 3 | Design RAG components | 1 | 4 |
+| Unit 3 | Evaluate RAG | 1 | 3 |
+| Unit 4 | Decide when to fine-tune | 1 | 1 |
+| Unit 4 | Compare fine-tuning methods | 1 | 5 |
+| Unit 4 | Select fine-tuning scenarios | 1 | 5 |
+| Unit 4 | Understand fine-tuning | 1 | 3 |
+| Unit 4 | Evaluate fine-tuning | 1 | 1 |
+| Unit 4 | Prepare fine-tuning data | 2 | 8 |
+| Unit 4 | Run a fine-tuning lifecycle | 1 | 5 |
+| Unit 4 | Manage fine-tuning risks | 2 | 6 |
+| Unit 5 | Choose optimization strategies | 2 | 5 |
+| Unit 5 | Combine optimization strategies | 2 | 5 |
+| Unit 5 | Compare optimization trade-offs | 1 | 3 |
+| Unit 5 | Apply the optimization decision framework | 1 | 5 |
+| Unit 6 | Complete the gpt-5 fine-tuning exercise | 2 | 7 |
+| Unit 6 | Configure the gpt-5 fine-tuning exercise | 1 | 6 |
+| Unit 7 | Validate assessment concepts | 1 | 5 |
+| Unit 8 | Synthesize optimization decisions | 1 | 4 |
+| Unit 2 | Improve travel-assistant behavior | 1 | 1 |
+| Unit 3 | Ground catalog recommendations | 1 | 1 |
+| Unit 4 | Justify travel-assistant fine-tuning | 1 | 3 |
+| Units 2, 3, 4, and 6 | Run a comparative optimization experiment | 1 | 5 |
+| Unit 3 | Diagnose enterprise retrieval | 1 | 1 |
+| Unit 5 | Balance quality, cost, and latency | 1 | 4 |
+| Units 2, 4, and 5 | Choose efficient optimization layers | 1 | 3 |
+| Units 3, 4, and 5 | Map failures to interventions | 1 | 4 |
+| **Total** | | **50** | **156** |

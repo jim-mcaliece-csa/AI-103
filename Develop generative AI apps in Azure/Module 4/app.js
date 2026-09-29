@@ -4,7 +4,7 @@
   var FLASHCARDS = Array.isArray(window.AI103_FLASHCARDS) ? window.AI103_FLASHCARDS : [];
   var QUESTIONS = Array.isArray(window.AI103_QUESTIONS) ? window.AI103_QUESTIONS : [];
   var SECTIONS = Array.isArray(window.AI103_EXAM_SECTIONS) ? window.AI103_EXAM_SECTIONS : [];
-  var STORAGE_KEY = "ai103-module4-study-lab-v1";
+  var STORAGE_KEY = "ai103-module4-optimize-model-performance-v1";
   var EXAM_SECONDS = 120 * 60;
   var timerHandle = null;
   var resultFilter = "all";
